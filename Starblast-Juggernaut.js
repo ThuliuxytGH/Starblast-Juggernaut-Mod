@@ -27,7 +27,7 @@ const gameOptions = {
   /*
   
   */
-  
+  /*
   info: {
     name: "Juggernaut",
     version: "0.6",
@@ -627,3 +627,4 @@ function prepareGame() {
   game.custom.initialized = false;
   setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
 }
+*/
