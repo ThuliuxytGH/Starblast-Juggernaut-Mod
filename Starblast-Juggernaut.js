@@ -29,7 +29,7 @@ const gameOptions = {
     developer: "Megalodon\n",
     
     "flagShip Builders": "Nok, Kuroyammy",
-    "Ship Builders": "Megalodon, Basit, ShadowFighter191\n"
+    "Ship Builders": "Thuliux, Megalodon, Basit, ShadowFighter191\n"
   },
   
   ships: [
@@ -210,13 +210,16 @@ const gameCommands = {
   setJugg: {
     usage: "setJugg <ID> <type>",
     description: "Used to Choose a new Juggernaut:\n<ID> Choose a specific player\n<type> choose a specific juggernaut ship to use",
-    action: function(type, ship=false) {
-      let player = game.findShip(type);
+    action: function(ID, type=undefined) {
+      let player = game.findShip(ID);
       if (player === game.custom.memory.isJuggernaut) {
         gameCommands.log("is already the juggernaut, try again with another valid ID.", "red", player);
         return;
       }
-      functions.usage.selectJuggernaut(player, ship);
+      if (type !== undefined) {
+        game.custom.memory.juggType = type;
+      }
+      functions.usage.selectJuggernaut(player);
       gameCommands.log("is now the juggernaut!", "green", player);
     }
   },
@@ -236,13 +239,16 @@ const gameCommands = {
   setFlag: {
     usage: "setFlag <ID> <type>",
     description: "Used to Choose a new FlagShip:\n<ID> Choose a specific player\n<type> choose a specific flagShip to use",
-    action: function(type, ship=false) {
-      let player = game.findShip(type);
+    action: function(ID, type=undefined) {
+      let player = game.findShip(ID);
       if (player === game.custom.memory.isFlagShip) {
         gameCommands.log("This player is already the flagship holder, try again with another valid ID.", "red", player);
         return;
       }
-      functions.usage.selectFlagShip(player, ship);
+      if (type !== undefined) {
+        
+      }
+      functions.usage.selectFlagShip(player, type);
       gameCommands.log("is now the FlagShip!", "green", player);
     }
   },
@@ -257,6 +263,22 @@ const gameCommands = {
       }
       functions.usage.removeFlagShip(player);
       gameCommands.log("is now back as a normal player.", "orange", player);
+    }
+  },
+  clearAll: {
+    usage: "clearAll",
+    description: "clearAll",
+    action: function() {
+      game.custom.memory = {
+        shipsInfo: gameOptions.ships.map(str => {
+          const jsedStr = JSON.parse(str);
+          return jsedStr;
+        }),
+        isJuggernaut: undefined,
+        juggType: undefined,
+        juggShield: undefined,
+        isFlagShip: undefined
+      };
     }
   },
   info: {
@@ -352,12 +374,12 @@ var functions = {
     random: function(list) { // returns a random object of a list
       return list[Math.floor(Math.random() * list.length)];
     },
-    setShip: function(team, ship, type, coords = {x: undefined, y: undefined}) {
+   setShip: function(team, ship, type, coords = {x: undefined, y: undefined}) {
       ship.set({
         team: team==2?1:team,
         hue: gameOptions.teams[team].hue,
+        shield: ship === game.custom.memory.isJuggernaut ? game.custom.memory.juggShield : 99999,
         type: type,
-        shield: 999999,
         crystals: team === 1 ? 720:1280,
         stats: 88888888,
         x: coords.x,
@@ -365,9 +387,9 @@ var functions = {
       });
     },
     getPlayers: function() {
-      return game.ships.filter(ship => ship !== game.custom.memory.isFlagShip).filter(ship => ship !== game.custom.memory.isJuggernaut);
+      return game.ships.filter(ship => ship !== game.custom.memory.isFlagShip).filter(ship => ship !== game.custom.memory.isJuggernaut).filter(ship => ship.alive);
     },
-    selectJuggernaut: function(newJugg, type=false) { // function to do the juggernaut change | no jugg => first set | yes jugg => switch between old and new
+    selectJuggernaut: function(newJugg) { // function to do the juggernaut change | no jugg => first set | yes jugg => switch between old and new
       const oldJugg = game.custom.memory.isJuggernaut;
       if (oldJugg) {
         const newShipType = this.random(gameOptions.teams[1].ships);
@@ -375,7 +397,7 @@ var functions = {
         functions.buttons._switch.toggle(oldJugg, true, newShipType);
       }
       game.custom.memory.isJuggernaut = newJugg;
-      this.setShip(0, newJugg, type?type:this.random(gameOptions.teams[0].ships), {x:0, y:0});
+      this.setShip(0, newJugg, game.custom.memory.juggType, {x:0, y:0});
       functions.buttons._switch.toggle(newJugg, false);
       functions.healthBar.updateUI(newJugg, false);
       if (game.custom.initialized === false) { // start the game when first jugg is chosen
@@ -471,7 +493,7 @@ var functions = {
           type: type,
           crystals: maxCrystals,
           stats: maxStats, 
-          shield: 999, vx: 0, vy: 0
+          shield: 9999, vx: 0, vy: 0
         });
         this.setBackground(ship, true, type);
       }
@@ -479,18 +501,15 @@ var functions = {
   },
   manage: function(game) { // js tick loop
     if (game.step % 20 === 0) {
-      try {
-        this.updateScoreboard(game);
-        functions.usage.getPlayers().forEach(ship => { // loop for players
-          if ((ship.x < 20 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
-          if (game.custom.memory.isJuggernaut) this.healthBar.updateUI(ship, true);
-        });
-      } catch(e) {
-        if (game.custom.initialized === true) {
-          const newJugg = functions.usage.random(this.getPlayers());
-          functions.usage.selectJuggernaut(newJugg);
-        }
+      this.updateScoreboard(game);
+      if (game.custom.memory.isJuggernaut === null) {
+        const newJugg = this.usage.random(this.usage.getPlayers());
+        this.usage.selectJuggernaut(newJugg); // OK
       }
+      functions.usage.getPlayers().concat(game.custom.memory.isFlagShip).forEach(ship => { // loop for players
+        if ((ship.x < 20 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
+        if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) this.healthBar.updateUI(ship, true);
+      });
     }
   },
   healthBar: { // Jugg health bar
@@ -498,19 +517,34 @@ var functions = {
       return gameOptions.juggernauts.map(str => JSON.parse(str)).filter(el => el.typespec.code === type)[0];
     },
     updateUI: function(ship, visible) { // UI component for the health bar in game
-      let jug = game.custom.memory.isJuggernaut; // finds who is juggernaut
-      const typeship = gameOptions.teams[1].ships.includes(jug.type) ? 799 : jug.type;
-      ship.setUIComponent({
-        id: "Frame_1",
-        position: visible ? [24, 4, 53, 6] : [0,0,0,0],
-        clickable: false,
-        visible: visible,
-        components: [
-          {type: "box", position: [0, 10, 100, 78], stroke: "#cf3131", width: 2},
-          {type: "box", position: [0, 10, ((jug.shield/this.finder(typeship).specs.shield.capacity[1]) * 100), 78], fill: "#cf3131"},
-          {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [${this.finder(typeship).typespec.name}]`, color: "#ffffff"},
-        ]
-      });
+      try {
+        let jug = game.custom.memory.isJuggernaut; // finds who is juggernaut
+        const typeship = gameOptions.teams[1].ships.includes(jug.type) ? 799 : jug.type;
+        game.custom.memory.juggShield = Math.round(jug.shield);
+        ship.setUIComponent({
+          id: "Frame_1",
+          position: visible ? [24, 4, 53, 6] : [0,0,0,0],
+          clickable: false,
+          visible: visible,
+          components: [
+            {type: "box", position: [0, 10, 100, 78], stroke: "#cf3131", width: 2},
+            {type: "box", position: [0, 10, ((Math.round(jug.shield)/this.finder(typeship).specs.shield.capacity[1]) * 100), 78], fill: "#cf3131"},
+            {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [${this.finder(typeship).typespec.name}]`, color: "#ffffff"},
+          ]
+        });
+      } catch(e) {
+        ship.setUIComponent({
+          id: "Frame_1",
+          position: [0,0,0,0],
+          clickable: false,
+          visible: false,
+          components: [
+            {type: "box", position: [0, 10, 100, 78], stroke: "#cf3131", width: 2},
+            {type: "box", position: [25, 10, 50, 78], fill: "#cf313199"},
+            {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [none]`, color: "#ffffff"},
+          ]
+        });
+      }
     }
   },
   findColor: function(ship) {
@@ -571,7 +605,6 @@ var functions = {
   }
 };
 
-
 setTimeout(() => {game.custom.started||prepareGame()}, 200);
 
 this.options = {
@@ -610,7 +643,7 @@ this.event = function(event, game) {
         functions.usage.selectJuggernaut(event.killer);
       }
       if (game.custom.memory.isFlagShip === event.ship) {
-        functions.usage.removeFlagShip(event.killer);
+        functions.usage.removeFlagShip(event.ship);
       }
       break;
   }
@@ -637,6 +670,8 @@ function prepareGame() {
         return jsedStr;
       }),
       isJuggernaut: undefined,
+      juggShield: 99999,
+      juggType: functions.usage.random(gameOptions.teams[0].ships),
       isFlagShip: undefined
     };
     
