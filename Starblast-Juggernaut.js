@@ -68,7 +68,7 @@ const gameOptions = {
       ships: [608, 605, 606, 607, 609, 610, 611, 612]
     },
     2: {
-      hue: 40, // orange
+      hue: 30, // orange
       ships: [630, 631]
     }
   }
@@ -186,15 +186,15 @@ const map =
 "                                                                                                    \n"+
 "                                                                                                    \n"+
 "               58                                                                                   \n"+
-"                                            999999999                                               \n"+
-"                                            9       9                                          6    \n"+
-"                                            9       9                              3545       88    \n"+
-"   589                                      9       9                           748799       83     \n"+
-"   35999                                    9       9                          5499999       83     \n"+
-"    63999 99993                             9       9                          4999          6      \n"+
-"     3739999765          687                999999999                                               \n"+
-"       646676         4553                                                                          \n"+
-"                     54                                                                             \n"+
+"                                            888888888888                                            \n"+
+"                                            8          8                                       6    \n"+
+"                                            8          8                           3545       88    \n"+
+"   589                                      8          8                        748799       83     \n"+
+"   35999                                    8          8                       5499999       83     \n"+
+"    63999 99993                             8          8                       4999          6      \n"+
+"     3739999765          687                8          8                                            \n"+
+"       646676         4553                  8          8                                            \n"+
+"                     54                     888888888888                                            \n"+
 "                                                                                                    \n"+
 "                                                                                                    ";
 
@@ -507,7 +507,7 @@ var functions = {
         this.usage.selectJuggernaut(newJugg); // OK
       }
       functions.usage.getPlayers().concat(game.custom.memory.isFlagShip).forEach(ship => { // loop for players
-        if ((ship.x < 20 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
+        if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
         if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) this.healthBar.updateUI(ship, true);
       });
     }
@@ -708,9 +708,7 @@ var controlStation1 = {
   diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
   bump: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
   specular: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sbtextures_SPECULAR.png",
-  shininess: 10,
-  emissiveColor: 0.165,
-  specularColor: '#FF0000',
+  specularColor: 0x0000FF,
   transparent: false,
 }
 game.setObject({
@@ -718,7 +716,7 @@ game.setObject({
   type: controlStation1,
   position: {x:200, y:200, z:-15},
   scale: {x:10, y:10, z:10},
-  rotation: {x:0, y:1.6, z:0},
+  rotation: {x:0, y:Math.PI/2, z:0},
 });
 
 var pointB = {
@@ -742,9 +740,7 @@ var controlStation2 = {
   diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
   bump: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
   specular: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sbtextures_SPECULAR.png",
-  shininess: 10,
-  emissiveColor: 0.165,
-  specularColor: '#FF0000',
+  specularColor: 0xFF0000,
   transparent: false,
 }
 game.setObject({
@@ -752,22 +748,22 @@ game.setObject({
   type: controlStation2,
   position: {x:-430, y:410, z:-15},
   scale: {x:10, y:10, z:10},
-  rotation: {x:0, y:1.6, z:0},
+  rotation: {x:0, y:Math.PI/2, z:0},
 });
 
 var pointC = {
   id: "pointC",
   obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
   shininess: 10,
-  emissiveColor: "#0000FF",
+  emissiveColor: 0x0000FF,
   emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPointDim.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
 };
 game.setObject({
   id: "pointC",
   type: pointC,
-  position: {x:-105, y:-260,z:0},
-  rotation: {x:Math.PI/2,y:Math.PI,z:0},
-  scale: {x:30,y:30,z:30},
+  position: {x:-105, y:-260,z:-5},
+  rotation: {x:Math.PI/2,y:Math.PI/4,z:0},
+  scale: {x:30,y:0,z:30},
 });
 
 var controlStation3 = {
@@ -776,17 +772,15 @@ var controlStation3 = {
   diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
   bump: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
   specular: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sbtextures_SPECULAR.png",
-  shininess: 10,
-  emissiveColor: 0.165,
-  specularColor: '#FF0000',
+  specularColor: 0x0000FF,
   transparent: false,
 }
 game.setObject({
   id: "station3",
   type: controlStation3,
-  position: {x:-105, y:-260, z:-15},
+  position: {x:-105, y:-260, z:-17.5},
   scale: {x:10, y:10, z:10},
-  rotation: {x:0, y:1.6, z:0},
+  rotation: {x:0, y:Math.PI/2, z:0},
 });
 
 var spawnui = {
@@ -799,7 +793,88 @@ var spawnui = {
 game.setObject({
   id: "spawn",
   type: spawnui,
-  position: {x:-15, y:-410,z:0},
+  position: {x:0, y:-412,z:-5},
   rotation: {x:Math.PI/2,y:Math.PI,z:0},
-  scale: {x:20,y:10,z:6.6},
+  scale: {x:28,y:1,z:7.8},
 });
+
+var cube = {
+  id: "cube",
+  obj: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/cube.obj",
+  diffuse: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/diffuse.jpg",
+  emissive: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/emissive.jpg",
+  bump: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/bump.jpg",
+  specularColor: 0xFF8040,
+  shininess: 5,
+  physics: {
+    mass: 500,
+    shape: [2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.308,3.048,2.878,2.759,2.697,2.697,2.759,2.878,3.048,3.308,3.672,3.678,3.474,3.169,2.958,2.806,2.723,2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.307,3.054,2.878,2.761,2.698,2.698,2.761,2.878,3.054,3.307,3.672,3.678,3.474,3.169,2.958,2.806,2.723],
+    fixed: true
+  }
+};
+
+game.setObject({
+  id: "cubeC1",
+  type: cube,
+  position: {x:55, y:-395,z:0},
+  rotation: {x:Math.PI,y:0,z:0},
+  scale: {x:1.8,y:1.8,z:1.8},
+});
+game.setObject({
+  id: "cubeC2",
+  type: cube,
+  position: {x:-55, y:-395,z:0},
+  rotation: {x:Math.PI,y:0,z:0},
+  scale: {x:1.8,y:1.8,z:1.8},
+});
+game.setObject({
+  id: "cubeC3",
+  type: cube,
+  position: {x:55, y:-475,z:0},
+  rotation: {x:Math.PI,y:0,z:0},
+  scale: {x:1.8,y:1.8,z:1.8},
+});
+game.setObject({
+  id: "cubeC4",
+  type: cube,
+  position: {x:-55, y:-475,z:0},
+  rotation: {x:Math.PI,y:0,z:0},
+  scale: {x:1.8,y:1.8,z:1.8},
+});
+
+for (let i = -45; i<=45; i+=10) {
+  game.setObject({
+    id: `cubeTop${i}`,
+    type: cube,
+    position: {x:i, y:-395,z:0},
+    rotation: {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5},
+    scale: {x:1.8,y:1.8,z:1.8},
+  });
+}
+for (let i = -45; i<=45; i+=10) {
+  game.setObject({
+    id: `cubeBottom${i}`,
+    type: cube,
+    position: {x:i, y:-475,z:0},
+    rotation: {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5},
+    scale: {x:1.8,y:1.8,z:1.8},
+  });
+}
+for (let i=-405; i>=-465; i-=10) {
+  game.setObject({
+    id: `cubeLeft${i}`,
+    type: cube,
+    position: {x:55, y:i,z:0},
+    rotation: {x:Math.PI,y:Math.PI/2,z:Math.PI},
+    scale: {x:1.8,y:1.8,z:1.8},
+  });
+}
+for (let i=-405; i>=-465; i-=10) {
+  game.setObject({
+    id: `cubeRight${i}`,
+    type: cube,
+    position: {x:-55, y:i,z:0},
+    rotation: {x:Math.PI,y:Math.PI/2,z:Math.PI},
+    scale: {x:1.8,y:1.8,z:1.8},
+  });
+}
