@@ -381,7 +381,6 @@ var functions = {
         shield: ship === game.custom.memory.isJuggernaut ? game.custom.memory.juggShield : 99999,
         type: type,
         crystals: team === 1 ? 720:1280,
-        stats: 88888888,
         x: coords.x,
         y: coords.y
       });
@@ -488,11 +487,9 @@ var functions = {
       action: function(ship, name) {
         const type = game.custom.memory.shipsInfo.filter(val => val.name == name)[0].typespec.code;
         const maxCrystals = 20 * Math.trunc(type / 100) * Math.trunc(type / 100);
-        const maxStats = Math.trunc(type / 100) < 7 ? 11111111 * Math.trunc(type / 100) : 0;
         ship.set({
           type: type,
           crystals: maxCrystals,
-          stats: maxStats, 
           shield: 9999, vx: 0, vy: 0
         });
         this.setBackground(ship, true, type);
