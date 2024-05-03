@@ -695,7 +695,7 @@ var pointA = {
   obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
   shininess: 10,
   emissiveColor: "#0000FF",
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPointDim.png"
+  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png"
 };
 game.setObject({
   id: "pointA",
@@ -707,10 +707,10 @@ game.setObject({
 
 var controlStation1 = {
   id: "station1",
-  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/starblast-1712836190956.obj",
-  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
-  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
-  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sbtextures_SPECULAR.png",
+  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
+  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
   specularColor: 0x0000FF,
   transparent: false,
 }
@@ -727,7 +727,7 @@ var pointB = {
   obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
   shininess: 10,
   emissiveColor: "#0000FF",
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPointDim.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
+  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
 };
 game.setObject({
   id: "pointB",
@@ -739,10 +739,10 @@ game.setObject({
 
 var controlStation2 = {
   id: "station2",
-  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/starblast-1712836190956.obj",
-  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
-  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
-  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sbtextures_SPECULAR.png",
+  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
+  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
   specularColor: 0xFF0000,
   transparent: false,
 }
@@ -759,7 +759,7 @@ var pointC = {
   obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
   shininess: 10,
   emissiveColor: 0x0000FF,
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPointDim.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
+  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
 };
 game.setObject({
   id: "pointC",
@@ -771,10 +771,10 @@ game.setObject({
 
 var controlStation3 = {
   id: "station3",
-  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/starblast-1712836190956.obj",
-  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
-  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sb_textures.png",
-  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/sbtextures_SPECULAR.png",
+  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
+  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
   specularColor: 0x0000FF,
   transparent: false,
 }
@@ -791,7 +791,7 @@ var spawnui = {
   obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
   shininess: 10,
   emissiveColor: "",
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/gottofight.png"
+  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/gottofight.png"
 };
 game.setObject({
   id: "spawn",
