@@ -23,7 +23,6 @@ var Crystallid_799 = '{"name":"Crystallid","level":7.9,"model":9,"size":6,"specs
 var Lancer_798 = '{"name":"Lancer","level":7.9,"model":8,"size":3.5,"zoom":0.85,"specs":{"shield":{"capacity":[20000,20000],"reload":[2,2]},"generator":{"capacity":[1300,1300],"reload":[400,400]},"ship":{"mass":800,"speed":[90,90],"rotation":[30,30],"acceleration":[80,80]}},"bodies":{"main":{"section_segments":8,"offset":{"x":0,"y":20,"z":0},"position":{"x":[0,0,0,0,0,0],"y":[0,-10,40,100,90,100],"z":[0,0,0,0,0,0]},"width":[0,10,23,10,0],"height":[0,5,23,10,0],"texture":[16,10,1,12],"laser":{"damage":[100,100],"rate":1,"type":2,"speed":[270,270],"number":1,"error":0},"propeller":true},"cockpit":{"section_segments":17,"offset":{"x":0,"y":10,"z":20},"position":{"x":[0,0,0,0,0,0,0,0],"y":[30,40,50,65,70,80,90],"z":[-7,-4.5,-6,-3.4,-6,-7,-12]},"width":[8,10,8,10,8,10,8],"height":[0,3,1,3,1,3,0],"texture":[17,63,17,63,17,63,17]},"innerWings":{"section_segments":7,"offset":{"x":50,"y":20,"z":0},"position":{"x":[-35,-35,-30,0,0,0,-5,-15,-35,-49,-49],"y":[-90,-110,-60,40,80,90,100,110,120,140,140],"z":[0,0,0,0,0,0,0,0,0]},"width":[0,5,10,15,20,17,15,13,10,0],"height":[0,5,5,5,5,5,5,5,5,0],"texture":[17,2,3,4,3,3,2,2,17],"laser":{"damage":[20,20],"rate":2,"type":1,"speed":[240,240],"number":1,"error":0}},"outerWings":{"section_segments":12,"offset":{"x":72,"y":120,"z":0},"position":{"x":[-25,-25,-10,0,10,-13,-20],"y":[-150,-160,-120,-80,-20,20,45],"z":[0,0,0,0,0,0,0]},"width":[0,3,8,13,16,12,6],"height":[0,3,3,3,3,3,0],"angle":0,"laser":{"damage":[4,4],"rate":4,"type":1,"speed":[190,240],"number":3,"error":30},"propeller":true,"texture":[17,2,3,4,63,13]},"sideCannon":{"section_segments":6,"offset":{"x":76,"y":62,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-15,-20,-10,0,10,25],"z":[0,0,0,0,0,0]},"width":[0,3,4,4,3,0],"height":[0,3,4,4,3,0],"texture":[17,1,2,3,4,1],"angle":10,"laser":{"damage":[10,10],"rate":4,"type":1,"speed":[150,175],"number":1,"error":0}},"side_propulsors":{"section_segments":10,"offset":{"x":12,"y":50,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[0,10,13,25,30,40,60,50],"z":[0,0,0,0,0,0,0,0]},"width":[0,5,10,10,10,5,5,10,5,0],"height":[0,5,10,10,10,5,5,10,5,0],"propeller":true,"texture":[5,2,11,2,63,11,12]},"cores":{"section_segments":16,"offset":{"x":80,"y":3,"z":-100},"position":{"x":[0,0,0,0],"y":[0,-1,1,1],"z":[0,0,0,0]},"width":[0,12,12,0],"height":[0,12,12,0],"propeller":false,"texture":[11,11,17,11],"vertical":true},"a":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":0,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"b":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":30,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"c":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":60,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"d":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":90,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"e":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":120,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"f":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":150,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"g":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":180,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"h":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":210,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"i":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":240,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"j":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":270,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"k":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":300,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]},"l":{"section_segments":6,"offset":{"x":80,"y":100,"z":3},"position":{"x":[0,0,0,0,0,0],"y":[-1,-2,0,0,0,0],"z":[0,0,0,0,0,0]},"width":[0,2,2,3,2,0],"height":[0,2,2,3,2,0],"angle":330,"laser":{"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"error":0},"propeller":false,"texture":[4,4,4,4]}},"wings":{"winglet1":{"length":[30,10],"width":[30,20,20],"angle":[0,0],"position":[-50,-75,-85],"doubleside":true,"texture":63,"bump":{"position":12.8,"size":6},"offset":{"x":80,"y":160,"z":0}},"winglet2":{"length":[30,10],"width":[20,10,10],"angle":[0,0],"position":[-65,-80,-90],"doubleside":true,"texture":63,"bump":{"position":27,"size":6},"offset":{"x":68,"y":200,"z":0}},"winglet3":{"length":[30,10],"width":[15,10,10],"angle":[0,0],"position":[-62.5,-75,-83],"doubleside":true,"texture":63,"bump":{"position":-30,"size":4.9},"offset":{"x":54,"y":220,"z":0}},"bumperWing":{"length":[30,30],"width":[100,80],"angle":[0,0],"position":[110,200],"doubleside":true,"texture":62.6,"bump":{"position":0,"size":4},"offset":{"x":65,"y":-130,"z":0}},"connect1":{"length":[20,20],"width":[10,10],"angle":[0,0],"position":[0,-8],"texture":[17],"doubleside":true,"bump":{"position":30,"size":10},"offset":{"x":10,"y":25,"z":0}},"connect2":{"length":[20,20],"width":[10,10],"angle":[0,0],"position":[0,-8],"texture":[17],"doubleside":true,"bump":{"position":30,"size":10},"offset":{"x":12,"y":45,"z":0}},"connect3":{"length":[20,20],"width":[10,10],"angle":[0,0],"position":[0,-8],"texture":[17],"doubleside":true,"bump":{"position":30,"size":10},"offset":{"x":17,"y":65,"z":0}},"connect4":{"length":[20,20],"width":[10,10],"angle":[0,0],"position":[0,-3],"texture":[17],"doubleside":true,"bump":{"position":30,"size":10},"offset":{"x":15,"y":80,"z":0}},"connect5":{"length":[20,20],"width":[10,10],"angle":[0,0],"position":[0,1],"texture":[17],"doubleside":true,"bump":{"position":30,"size":10},"offset":{"x":14,"y":95,"z":0}},"connect6":{"length":[24,24],"width":[10,10],"angle":[0,0],"position":[0,4],"texture":[17],"doubleside":true,"bump":{"position":30,"size":10},"offset":{"x":11,"y":110,"z":0}}},"typespec":{"name":"Lancer","level":7.9,"model":8,"code":798,"specs":{"shield":{"capacity":[20000,20000],"reload":[2,2]},"generator":{"capacity":[1300,1300],"reload":[400,400]},"ship":{"mass":800,"speed":[90,90],"rotation":[30,30],"acceleration":[80,80]}},"shape":[0,6.413,6.452,5.3,4.339,3.738,6.687,6.443,6.102,5.888,5.785,5.84,5.999,6.298,6.699,7.142,9.58,10.294,10.273,11.087,11.943,12.034,12.243,12.144,10.704,11.2,10.704,12.144,12.243,12.034,11.943,11.087,10.273,10.294,9.58,7.142,6.699,6.298,6.02,5.84,5.785,5.888,6.102,6.443,6.687,3.738,4.339,5.3,6.452,6.413],"lasers":[{"x":0,"y":0.7,"z":0,"angle":0,"damage":[100,100],"rate":1,"type":2,"speed":[270,270],"number":1,"spread":0,"error":0,"recoil":0},{"x":1.05,"y":-6.3,"z":0,"angle":0,"damage":[20,20],"rate":2,"type":1,"speed":[240,240],"number":1,"spread":0,"error":0,"recoil":0},{"x":-1.05,"y":-6.3,"z":0,"angle":0,"damage":[20,20],"rate":2,"type":1,"speed":[240,240],"number":1,"spread":0,"error":0,"recoil":0},{"x":3.29,"y":-2.8,"z":0,"angle":0,"damage":[4,4],"rate":4,"type":1,"speed":[190,240],"number":3,"spread":0,"error":30,"recoil":0},{"x":-3.29,"y":-2.8,"z":0,"angle":0,"damage":[4,4],"rate":4,"type":1,"speed":[190,240],"number":3,"spread":0,"error":30,"recoil":0},{"x":5.077,"y":2.961,"z":0.21,"angle":10,"damage":[10,10],"rate":4,"type":1,"speed":[150,175],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.077,"y":2.961,"z":0.21,"angle":-10,"damage":[10,10],"rate":4,"type":1,"speed":[150,175],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.6,"y":6.86,"z":0.21,"angle":0,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.6,"y":6.86,"z":0.21,"angle":0,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.53,"y":6.879,"z":0.21,"angle":30,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.53,"y":6.879,"z":0.21,"angle":-30,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.479,"y":6.93,"z":0.21,"angle":60,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.479,"y":6.93,"z":0.21,"angle":-60,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.46,"y":7,"z":0.21,"angle":90,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.46,"y":7,"z":0.21,"angle":-90,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.479,"y":7.07,"z":0.21,"angle":120,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.479,"y":7.07,"z":0.21,"angle":-120,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.53,"y":7.121,"z":0.21,"angle":150,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.53,"y":7.121,"z":0.21,"angle":-150,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.6,"y":7.14,"z":0.21,"angle":180,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.6,"y":7.14,"z":0.21,"angle":-180,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.67,"y":7.121,"z":0.21,"angle":210,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.67,"y":7.121,"z":0.21,"angle":-210,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.721,"y":7.07,"z":0.21,"angle":240,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.721,"y":7.07,"z":0.21,"angle":-240,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.74,"y":7,"z":0.21,"angle":270,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.74,"y":7,"z":0.21,"angle":-270,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.721,"y":6.93,"z":0.21,"angle":300,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.721,"y":6.93,"z":0.21,"angle":-300,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.67,"y":6.879,"z":0.21,"angle":330,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.67,"y":6.879,"z":0.21,"angle":-330,"damage":[20,20],"rate":0.25,"type":1,"speed":[200,200],"number":1,"spread":0,"error":0,"recoil":0}],"radius":12.243}}';
 var Biomorph_797 = '{"name":"Biomorph","level":7.9,"model":7,"size":2.8,"specs":{"shield":{"capacity":[30000,30000],"reload":[1,1]},"generator":{"capacity":[1200,1200],"reload":[400,400]},"ship":{"mass":1200,"speed":[60,60],"rotation":[25,25],"acceleration":[70,70]}},"bodies":{"main":{"section_segments":6,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[105,90,0,-100,-140,-170],"z":[0,0,0,0,0,0,0]},"width":[10,10,40,10,5,0],"height":[-5,-5,-20,-10,-5,0],"texture":[13,18,12,13,12],"propeller":true,"laser":{"damage":[38,84],"rate":0.25,"type":2,"speed":[260,260],"recoil":0,"number":4,"error":0}},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-60,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-30,0,30,60,90],"z":[0,0,0,0,0]},"width":[0,17,35,17,0],"height":[0,10,10,10,0],"texture":[4]},"cockBumper":{"section_segments":8,"offset":{"x":0,"y":-60,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-32,0,30,60,91],"z":[0,0,0,0,0]},"width":[2,19,37,19,2],"height":[0,5,5,5,0],"texture":[17]},"cockEyes":{"section_segments":17,"offset":{"x":0,"y":-80,"z":27},"position":{"x":[0,0,0,0,0,0,0,0],"y":[10,40,50,65,70,80,90],"z":[-7,-4.5,-8,-3.4,-6,-5,-12]},"width":[8,18,8,15,18,13,8],"height":[0,3,1,3,1,3,0],"texture":[17,4,17,4,17,4,17]},"shank1":{"section_segments":22,"offset":{"x":50,"y":-50,"z":10},"position":{"x":[0,0,0,0,0,0,0],"y":[-90,-40,-30,15,60,70,100],"z":[0,0,0,0,0,0,0]},"width":[0,10,10,10,10,10,0],"height":[0,10,10,10,10,10,0],"texture":[13,4,8,8,4,18],"laser":{"damage":[35,35],"rate":0.7,"type":1,"speed":[150,150],"number":1}},"shank2":{"section_segments":22,"offset":{"x":100,"y":-85,"z":10},"position":{"x":[0,0,0,0,0,0,0],"y":[-90,-40,-30,15,60,70,100],"z":[0,0,0,0,0,0,0]},"width":[0,10,10,10,10,10,0],"height":[0,10,10,10,10,10,0],"texture":[13,4,8,8,4,18],"laser":{"damage":[20,20],"rate":1.5,"type":1,"speed":[150,150],"number":1}},"bodyCannon":{"section_segments":22,"offset":{"x":25,"y":-70,"z":-2},"position":{"x":[0,0,0,0,-10,-10,-10],"y":[-20,-40,0,15,60,150,120],"z":[0,0,0,0,0,0,0]},"width":[0,5,10,10,10,10,0],"height":[0,5,10,10,10,10,0],"texture":[16,18,8,8,12,18],"propeller":true,"laser":{"damage":[80,80],"rate":0.5,"type":1,"speed":[150,150],"number":1}},"shank3":{"section_segments":22,"offset":{"x":12,"y":-30,"z":-4},"position":{"x":[0,0,0,0,0,0,0],"y":[-90,-40,-30,15,60,70,100],"z":[0,0,0,0,0,0,0]},"width":[0,10,10,10,10,10,0],"height":[0,10,10,10,10,10,0],"texture":[13,4,8,8,4,18],"laser":{"damage":[30,30],"rate":1.3,"type":1,"speed":[150,150],"number":1}},"wingCannon":{"section_segments":22,"offset":{"x":110,"y":30,"z":-12},"position":{"x":[0,0,0,0,0,0,0],"y":[0,-40,-30,15,60,70,100],"z":[0,0,0,0,0,0,0]},"width":[0,10,10,10,10,10,0],"height":[0,10,10,10,10,10,0],"texture":[13,4,8,8,4,18],"angle":-25,"laser":{"damage":[40,40],"rate":1.5,"type":1,"speed":[150,150],"number":2}},"sideCannon1":{"section_segments":6,"offset":{"x":116,"y":-115,"z":13},"position":{"x":[0,0,0,0,0,0],"y":[-15,-20,-10,0,10,25],"z":[0,0,0,0,0,0]},"width":[0,3,4,4,3,0],"height":[0,3,4,4,3,0],"texture":[17,1,2,3,17],"angle":10,"laser":{"damage":[15,15],"rate":3,"type":1,"speed":[150,175],"number":1,"error":0}},"sideCannon2":{"section_segments":6,"offset":{"x":123,"y":-122,"z":12},"position":{"x":[0,0,0,0,0,0],"y":[-15,-20,-10,0,10,25],"z":[0,0,0,0,0,0]},"width":[0,3,4,4,3,0],"height":[0,3,4,4,3,0],"texture":[17,1,2,3,17],"angle":10,"laser":{"damage":[10,10],"rate":4,"type":1,"speed":[150,175],"number":1,"error":0}}},"wings":{"frontWing":{"doubleside":true,"offset":{"x":0,"y":-100,"z":9},"length":[90,40,20],"width":[70,50,30,20],"angle":[0,0,0],"position":[60,10,-40,-85],"texture":[10,2,13],"bump":{"position":10,"size":10}},"backWing":{"doubleside":true,"offset":{"x":4,"y":20,"z":-10},"length":[90,28,-15],"width":[90,60,50,15],"angle":[0,0,0],"position":[-100,-10,60,115],"texture":[18,18,13],"bump":{"position":10,"size":10}},"pincers":{"doubleside":true,"offset":{"x":18,"y":-70,"z":-5},"length":[35,-20],"width":[150,70,0],"angle":[0,0],"position":[50,-40,-145],"texture":[3],"bump":{"position":10,"size":10}},"winglet1":{"length":[7,7],"width":[16,15,40],"angle":[10,-10],"position":[-50,-40,-45],"doubleside":true,"bump":{"position":0,"size":3},"texture":63,"offset":{"x":-42,"y":-130,"z":-8.5}},"winglet2":{"length":[7,7],"width":[20,15,55],"angle":[10,-10],"position":[-50,-40,-55],"doubleside":true,"bump":{"position":0,"size":3},"texture":63,"offset":{"x":40,"y":-130,"z":-8}},"backWinglet1":{"length":[7,7],"width":[20,15,55],"angle":[10,-10],"position":[50,50,85],"doubleside":true,"bump":{"position":0,"size":3},"texture":63,"offset":{"x":24,"y":19,"z":0}},"backWinglet2":{"length":[7,7],"width":[20,15,55],"angle":[10,-10],"position":[-50,-50,-55],"doubleside":true,"bump":{"position":0,"size":3},"texture":63,"offset":{"x":23,"y":85,"z":0}},"stab":{"length":[40,20],"width":[60,30,10],"angle":[-10,30],"position":[60,75,110],"doubleside":true,"texture":63,"bump":{"position":0,"size":10},"offset":{"x":105,"y":-160,"z":4}}},"typespec":{"name":"Biomorph","level":7.9,"model":7,"code":797,"specs":{"shield":{"capacity":[30000,30000],"reload":[1,1]},"generator":{"capacity":[1200,1200],"reload":[400,400]},"ship":{"mass":1200,"speed":[60,60],"rotation":[25,25],"acceleration":[70,70]}},"shape":[9.52,12.181,12.275,9.729,11.287,13.777,13.173,9.762,9.836,9.645,9.565,6.353,7.61,7.555,7.186,7.156,7.794,8.444,9.154,9.708,9.979,7.748,6.837,7.662,5.9,5.892,5.9,7.662,6.837,7.748,9.979,9.708,9.154,8.444,7.794,7.156,7.186,7.555,7.61,6.353,9.565,9.645,9.836,9.762,13.173,13.777,11.287,9.729,12.275,12.181],"lasers":[{"x":0,"y":-9.52,"z":0,"angle":0,"damage":[38,84],"rate":0.25,"type":2,"speed":[260,260],"number":4,"spread":0,"error":0,"recoil":0},{"x":2.8,"y":-7.84,"z":0.56,"angle":0,"damage":[35,35],"rate":0.7,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":-2.8,"y":-7.84,"z":0.56,"angle":0,"damage":[35,35],"rate":0.7,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":5.6,"y":-9.8,"z":0.56,"angle":0,"damage":[20,20],"rate":1.5,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":-5.6,"y":-9.8,"z":0.56,"angle":0,"damage":[20,20],"rate":1.5,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":1.4,"y":-6.16,"z":-0.112,"angle":0,"damage":[80,80],"rate":0.5,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":-1.4,"y":-6.16,"z":-0.112,"angle":0,"damage":[80,80],"rate":0.5,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":0.672,"y":-6.72,"z":-0.224,"angle":0,"damage":[30,30],"rate":1.3,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":-0.672,"y":-6.72,"z":-0.224,"angle":0,"damage":[30,30],"rate":1.3,"type":1,"speed":[150,150],"number":1,"spread":0,"error":0,"recoil":0},{"x":7.107,"y":-0.35,"z":-0.672,"angle":-25,"damage":[40,40],"rate":1.5,"type":1,"speed":[150,150],"number":2,"spread":0,"error":0,"recoil":0},{"x":-7.107,"y":-0.35,"z":-0.672,"angle":25,"damage":[40,40],"rate":1.5,"type":1,"speed":[150,150],"number":2,"spread":0,"error":0,"recoil":0},{"x":6.302,"y":-7.543,"z":0.728,"angle":10,"damage":[15,15],"rate":3,"type":1,"speed":[150,175],"number":1,"spread":0,"error":0,"recoil":0},{"x":-6.302,"y":-7.543,"z":0.728,"angle":-10,"damage":[15,15],"rate":3,"type":1,"speed":[150,175],"number":1,"spread":0,"error":0,"recoil":0},{"x":6.694,"y":-7.935,"z":0.672,"angle":10,"damage":[10,10],"rate":4,"type":1,"speed":[150,175],"number":1,"spread":0,"error":0,"recoil":0},{"x":-6.694,"y":-7.935,"z":0.672,"angle":-10,"damage":[10,10],"rate":4,"type":1,"speed":[150,175],"number":1,"spread":0,"error":0,"recoil":0}],"radius":13.777}}';
 
-
 const gameOptions = { 
   
   info: {
@@ -44,8 +43,7 @@ const gameOptions = {
     NanoNemesis_609,
     Machete_610,
     Exodia_611,
-    Ark_X_612,
-    Wakizashi_613
+    Ark_X_612
   ],
   
   juggernauts: [
@@ -70,7 +68,7 @@ const gameOptions = {
     },
     1: { // "Hunters"
       hue: 0, // red
-      ships: [608, 605, 606, 607, 609, 610, 611, 612, 613]
+      ships: [608, 605, 606, 607, 609, 610, 611, 612]
     },
     2: {
       hue: 30, // orange
@@ -191,15 +189,15 @@ const map =
 "                                                                                                    \n"+
 "                                                                                                    \n"+
 "               58                                                                                   \n"+
-"                                            888888888888                                            \n"+
-"                                            8          8                                       6    \n"+
-"                                            8          8                           3545       88    \n"+
-"   589                                      8          8                        748799       83     \n"+
-"   35999                                    8          8                       5499999       83     \n"+
-"    63999 99993                             8          8                       4999          6      \n"+
-"     3739999765          687                8          8                                            \n"+
-"       646676         4553                  8          8                                            \n"+
-"                     54                     888888888888                                            \n"+
+"                                            111111111111                                            \n"+
+"                                            1          1                                       6    \n"+
+"                                            1          1                           3545       88    \n"+
+"   589                                      1          1                        748799       83     \n"+
+"   35999                                    1          1                       5499999       83     \n"+
+"    63999 99993                             1          1                       4999          6      \n"+
+"     3739999765          687                1          1                                            \n"+
+"       646676         4553                  1          1                                            \n"+
+"                     54                     111111111111                                            \n"+
 "                                                                                                    \n"+
 "                                                                                                    ";
 
@@ -225,6 +223,7 @@ const gameCommands = {
         game.custom.memory.juggType = type;
       }
       functions.usage.selectJuggernaut(player);
+      for (let ship of game.ships) functions.usage.alert(ship, `Juggernaut`, `A Juggernaut just landed, stop it from capturing the points!`, "", `red`, 5000, {v1: 8, v2: 4, v3: 4});
       gameCommands.log("is now the juggernaut!", "green", player);
     }
   },
@@ -254,6 +253,7 @@ const gameCommands = {
         
       }
       functions.usage.selectFlagShip(player, type);
+      for (let ship of game.ships) functions.usage.alert(ship, `FlagShip`, `A FlagShip is now among us! Help it killing the juggernaut!`,"" , `red`, 5000, {v1: 8, v2: 4, v3: 4});
       gameCommands.log("is now the FlagShip!", "green", player);
     }
   },
@@ -268,22 +268,6 @@ const gameCommands = {
       }
       functions.usage.removeFlagShip(player);
       gameCommands.log("is now back as a normal player.", "orange", player);
-    }
-  },
-  clearAll: {
-    usage: "clearAll",
-    description: "clearAll",
-    action: function() {
-      game.custom.memory = {
-        shipsInfo: gameOptions.ships.map(str => {
-          const jsedStr = JSON.parse(str);
-          return jsedStr;
-        }),
-        isJuggernaut: undefined,
-        juggType: undefined,
-        juggShield: undefined,
-        isFlagShip: undefined
-      };
     }
   },
   info: {
@@ -303,18 +287,19 @@ const gameCommands = {
           break;
         case "players":
           const playerList = {
-            jugg: `[[i;#70dcff;]ID:] [[g;Gold;]${game.custom.memory.isJuggernaut.id}][[i;#70dcff;], Name:] [[g;Gold;]${game.custom.memory.isJuggernaut.name.replace(/[\[\]]/g, '|')}]`,
-            flag: `[[i;#70dcff;]ID:] [[g;Gold;]${game.custom.memory.isFlagShip.id}][[i;#70dcff;], Name:] [[g;Gold;]${game.custom.memory.isFlagShip.name.replace(/[\[\]]/g, '|')}]`,
+            jugg: game.custom.memory.isJuggernaut?`[[i;#70dcff;]ID:] [[g;Gold;]${game.custom.memory.isJuggernaut.id}][[i;#70dcff;], Name:] [[g;Gold;]${game.custom.memory.isJuggernaut.name.replace(/[\[\]]/g, '|')}]`:`[[g;#70aeff;]None]`,
+            flag: game.custom.memory.isFlagShip?`[[i;#70dcff;]ID:] [[g;Gold;]${game.custom.memory.isFlagShip.id}][[i;#70dcff;], Name:] [[g;Gold;]${game.custom.memory.isFlagShip.name.replace(/[\[\]]/g, '|')}]`:`[[g;#70aeff;]None]`,
             play: game.ships.filter(ship => ship !== game.custom.memory.isFlagShip && ship !== game.custom.memory.isJuggernaut)
               .map(ship => `[[i;#70dcff;]ID:] [[g;Gold;]${ship.id}][[i;#70dcff;], Name:] [[g;Gold;]${ship.name.replace(/[\[\]]/g, '|')}]`)
               .join("\n"),
           };
-          game.modding.terminal.echo(`[[g;#85ff70;]Amount of players:] [[gb;#fffc70;]${game.ships.length}]\n`);
-          game.modding.terminal.echo(`[[gu;#70aeff;]Juggernaut][[g;#70aeff;]:] \n${playerList.jugg||"[[g;#70aeff;]None]"}\n`);
-          game.modding.terminal.echo(`[[gu;#70aeff;]FlagShips][[g;#70aeff;]:] \n${playerList.flag||"[[g;#70aeff;]None]"}\n`);
+          game.modding.terminal.echo(`[[g;#fffc70;]Amount of players:] [[gb;#fffc70;]${game.ships.length}]\n`);
+          game.modding.terminal.echo(`[[gu;#36f108;]Juggernaut][[g;#36f108;] -] ${playerList.jugg}`);
+          game.modding.terminal.echo(`[[gu;#f10d0d;]FlagShip][[g;#36f108;] -] ${playerList.flag}\n`);
           game.modding.terminal.echo(`[[gu;#70aeff;]Players][[g;#70aeff;]:] \n${playerList.play||"[[g;#70aeff;]None]"}\n`);
           break;
       }
+
     }
   },
   findColor: function(color) { // do colors
@@ -392,14 +377,15 @@ var functions = {
       });
     },
     getPlayers: function() {
-      return game.ships.filter(ship => ship !== game.custom.memory.isFlagShip).filter(ship => ship !== game.custom.memory.isJuggernaut).filter(ship => ship.alive);
+      return game.ships.filter(ship => ship !== game.custom.memory.isFlagShip).filter(ship => ship !== game.custom.memory.isJuggernaut);
     },
     selectJuggernaut: function(newJugg) { // function to do the juggernaut change | no jugg => first set | yes jugg => switch between old and new
       const oldJugg = game.custom.memory.isJuggernaut;
       if (oldJugg) {
         const newShipType = this.random(gameOptions.teams[1].ships);
-        this.setShip(1, oldJugg, newShipType, {x:-15, y:-430});
+        this.setShip(1, oldJugg, newShipType, {x:0, y:-440});
         functions.buttons._switch.toggle(oldJugg, true, newShipType);
+        oldJugg.custom.isOutOfSpawn = false;
       }
       game.custom.memory.isJuggernaut = newJugg;
       this.setShip(0, newJugg, game.custom.memory.juggType, {x:0, y:0});
@@ -413,15 +399,16 @@ var functions = {
       game.custom.memory.isJuggernaut = undefined;
       jugg.custom.isOutOfSpawn = false;
       const newShipType = this.random(gameOptions.teams[1].ships);
-      this.setShip(1, jugg, newShipType, {x:-15, y:-430});
+      this.setShip(1, jugg, newShipType, {x:0, y:-440});
       functions.buttons._switch.toggle(jugg, true, newShipType);
     },
     selectFlagShip: function(newFlag, type=false) {
       const oldFlag = game.custom.memory.isFlagShip;
       if (oldFlag) {
         const newShipType = this.random(gameOptions.teams[1].ships);
-        this.setShip(1, oldFlag, newShipType, {x:-15, y:-430});
+        this.setShip(1, oldFlag, newShipType, {x:0, y:-440});
         functions.buttons._switch.toggle(oldFlag, true, newShipType);
+        oldFlag.custom.isOutOfSpawn = false;
       }
       game.custom.memory.isFlagShip = newFlag;
       this.setShip(2, newFlag, type?type:this.random(gameOptions.teams[2].ships));
@@ -433,23 +420,41 @@ var functions = {
       game.custom.memory.isFlagShip = undefined;
       flag.custom.isOutOfSpawn = false;
       const newShipType = this.random(gameOptions.teams[1].ships);
-      this.setShip(1, flag, newShipType, {x:-15, y:-430});
+      this.setShip(1, flag, newShipType, {x:0, y:-440});
       functions.buttons._switch.toggle(flag, true, newShipType);
+      functions.healthBar.updateUI(flag, false);
     },
     spawn: function(ship) { // manage spawn
       ship.custom.isOutOfSpawn = false;
       functions.buttons._switch.toggle(ship, true);
       if (ship.custom.initialized) {
-        this.setShip(1, ship, ship.type, {x:-15, y:-430});
+        this.setShip(1, ship, ship.type, {x:0, y:-450});
         return;
       }
-      this.setShip(1, ship, 605, {x:-15, y:-430});
+      this.setShip(1, ship, 605, {x:0, y:-450});
       ship.custom.initialized = true;
+      this.alert(ship, `Juggernaut`, `Created by:`, "Thuliux and Megalodon", `yellow`, 7500, {v1: 12, v2: 3, v3: 4});
     },
     outOfSpawn: function(ship) {
       ship.set({x:ship.x, y:-380});
       functions.buttons._switch.toggle(ship, false);
       ship.custom.isOutOfSpawn = true;
+      this.alert(ship, `Playing`, `You're out of the spawn!`, "", `yellow`, 3000, {v1: 8, v2: 4, v3: 4});
+    },
+    alert: function(ship, value1, value2="", value3="", color="none", time=3000, i={v1: 4, v2: 4, v3: 4}) {
+      clearTimeout(ship.custom.logtimeout);
+      ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "alertText", visible: false, position: [0, 0, 0, 0]})}, time);
+      ship.setUIComponent({
+        id: "alertText",
+        position: [-5, -5, 110, 110],
+        clickable: false,
+        visible: true,
+        components: [
+          {type: "text", position: [0, 20, 100, i.v1], color: gameCommands.findColor(color), value: value1},
+          {type: "text", position: [0, 25+(i.v1-i.v2), 100, i.v2], color: gameCommands.findColor(color), value: value2},
+          {type: "text", position: [0, 30+(i.v2-i.v3)+(i.v1-i.v2), 100, i.v3], color: gameCommands.findColor(color), value: value3},
+        ]
+      });
     }
   },
   buttons: {
@@ -502,19 +507,6 @@ var functions = {
       }
     }
   },
-  manage: function(game) { // js tick loop
-    if (game.step % 20 === 0) {
-      this.updateScoreboard(game);
-      if (game.custom.memory.isJuggernaut === null) {
-        const newJugg = this.usage.random(this.usage.getPlayers());
-        this.usage.selectJuggernaut(newJugg); // OK
-      }
-      functions.usage.getPlayers().concat(game.custom.memory.isFlagShip).forEach(ship => { // loop for players
-        if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
-        if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) this.healthBar.updateUI(ship, true);
-      });
-    }
-  },
   healthBar: { // Jugg health bar
     finder: function(type) { // allows to find what ship the juggernaut has
       return gameOptions.juggernauts.map(str => JSON.parse(str)).filter(el => el.typespec.code === type)[0];
@@ -533,6 +525,7 @@ var functions = {
             {type: "box", position: [0, 10, 100, 78], stroke: "#cf3131", width: 2},
             {type: "box", position: [0, 10, ((Math.round(jug.shield)/this.finder(typeship).specs.shield.capacity[1]) * 100), 78], fill: "#cf3131"},
             {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [${this.finder(typeship).typespec.name}]`, color: "#ffffff"},
+            {type: "text", position: [1, 21.77, 100, 54.55], align: "left", value: `🛡${Math.trunc((game.custom.memory.juggShield)/10)/100}K`, color: "#fffff"},
           ]
         });
       } catch(e) {
@@ -627,7 +620,21 @@ this.options = {
   speed_mod: 1.2,
 };
 
-this.tick = function(game) {functions.manage(game)};
+this.tick = function(game) {
+  if (game.step % 20 === 0) {
+    functions.updateScoreboard(game);
+    if (game.custom.memory.isJuggernaut === null) {
+      const newJugg = functions.usage.random(functions.usage.getPlayers());
+      const newFlag = functions.usage.random(functions.usage.getPlayers().filter(ship => ship!=newJugg));
+      functions.usage.selectJuggernaut(newJugg);
+      functions.usage.selectFlagShip(newFlag);
+    }
+    functions.usage.getPlayers().concat(game.custom.memory.isFlagShip).forEach(ship => { // loop for players
+      if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
+      if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) functions.healthBar.updateUI(ship, true);
+    });
+  }
+};
 
 this.event = function(event, game) {
   switch (event.name) {
@@ -643,6 +650,12 @@ this.event = function(event, game) {
       break;
     case "ship_destroyed":
       if (game.custom.memory.isJuggernaut === event.ship) {
+        if (game.custom.memory.isFlagShip == event.killer) {
+          functions.usage.removeFlagShip(event.killer);
+          const newFlag = functions.usage.random(functions.usage.getPlayers().filter(ship => ship!=event.killer && ship.alive));
+          functions.usage.selectFlagShip(newFlag);
+        }
+        if (game.custom.memory.isJuggernaut !== null) game.custom.memory.juggShield = 99999;
         functions.usage.selectJuggernaut(event.killer);
       }
       if (game.custom.memory.isFlagShip === event.ship) {
@@ -690,117 +703,112 @@ function prepareGame() {
   setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
 }
 
-var pointA = {
-  id: "pointA",
-  obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
-  shininess: 10,
-  emissiveColor: "#0000FF",
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png"
-};
 game.setObject({
   id: "pointA",
-  type: pointA,
+  type: {
+    id: "pointA",
+    obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
+    emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png",
+    emissiveColor: "#0000FF",
+    shininess: 10
+  },
   position: {x:200, y:200,z:0},
   rotation: {x:Math.PI/2,y:Math.PI,z:0},
   scale: {x:30,y:30,z:30},
 });
-
-var controlStation1 = {
-  id: "station1",
-  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
-  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
-  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
-  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
-  specularColor: 0x0000FF,
-  transparent: false,
-}
 game.setObject({
   id: "station1",
-  type: controlStation1,
+  type: {
+    id: "station1",
+    obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
+    diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+    bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+    specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
+    specularColor: 0x0000FF,
+    transparent: false,
+    shininess: 100
+  },
   position: {x:200, y:200, z:-15},
   scale: {x:10, y:10, z:10},
   rotation: {x:0, y:Math.PI/2, z:0},
 });
 
-var pointB = {
-  id: "pointB",
-  obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
-  shininess: 10,
-  emissiveColor: "#0000FF",
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
-};
+
 game.setObject({
   id: "pointB",
-  type: pointB,
+  type: {
+    id: "pointB",
+    obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
+    emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png",
+    emissiveColor: "#0000FF",
+    shininess: 10
+  },
   position: {x:-430, y:410,z:0},
   rotation: {x:Math.PI/2,y:Math.PI,z:0},
   scale: {x:30,y:30,z:30},
 });
-
-var controlStation2 = {
-  id: "station2",
-  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
-  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
-  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
-  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
-  specularColor: 0xFF0000,
-  transparent: false,
-}
 game.setObject({
   id: "station2",
-  type: controlStation2,
+  type: {
+    id: "station2",
+    obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
+    diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+    bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+    specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
+    specularColor: 0x0000FF,
+    transparent: false,
+    shininess: 100
+  },
   position: {x:-430, y:410, z:-15},
   scale: {x:10, y:10, z:10},
   rotation: {x:0, y:Math.PI/2, z:0},
 });
 
-var pointC = {
-  id: "pointC",
-  obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
-  shininess: 10,
-  emissiveColor: 0x0000FF,
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png"//https://raw.githubusercontent.com/ThuliuxytGH/Juggernaut-textures-map/main/background-images/controlPoint.png?raw=true",
-};
 game.setObject({
   id: "pointC",
-  type: pointC,
+  type: {
+    id: "pointC",
+    obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
+    emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/controlPoint.png",
+    emissiveColor: "#0000FF",
+    shininess: 10
+  },
   position: {x:-105, y:-260,z:-5},
   rotation: {x:Math.PI/2,y:Math.PI/4,z:0},
   scale: {x:30,y:0,z:30},
 });
-
-var controlStation3 = {
-  id: "station3",
-  obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
-  diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
-  bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
-  specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
-  specularColor: 0x0000FF,
-  transparent: false,
-}
 game.setObject({
   id: "station3",
-  type: controlStation3,
+  type: {
+    id: "station3",
+    obj: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/objects/controlStation.obj",
+    diffuse: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+    bump: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/shipTextures.png",
+    specular: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/textures/specularShipTextures.png",
+    specularColor: 0x0000FF,
+    transparent: false,
+    shininess: 100
+  },
   position: {x:-105, y:-260, z:-17.5},
   scale: {x:10, y:10, z:10},
   rotation: {x:0, y:Math.PI/2, z:0},
 });
 
-var spawnui = {
-  id: "spawn",
-  obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
-  shininess: 10,
-  emissiveColor: "",
-  emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/gottofight.png"
-};
+
 game.setObject({
   id: "spawn",
-  type: spawnui,
+  type: {
+    id: "spawn",
+    obj: "https://raw.githubusercontent.com/LGamingOfficial/starblast/main/plane.obj",
+    emissive: "https://raw.githubusercontent.com/ThuliuxytGH/Starblast-Juggernaut-Mod/main/images/gottofight.png"
+  },
   position: {x:0, y:-412,z:-5},
   rotation: {x:Math.PI/2,y:Math.PI,z:0},
   scale: {x:28,y:1,z:7.8},
 });
 
+var size = 1.4;
+var addC = 0.5;
 var cube = {
   id: "cube",
   obj: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/cube.obj",
@@ -808,7 +816,7 @@ var cube = {
   emissive: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/emissive.jpg",
   bump: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/bump.jpg",
   specularColor: 0xFF8040,
-  shininess: 5,
+  shininess: 4,
   physics: {
     mass: 500,
     shape: [2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.308,3.048,2.878,2.759,2.697,2.697,2.759,2.878,3.048,3.308,3.672,3.678,3.474,3.169,2.958,2.806,2.723,2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.307,3.054,2.878,2.761,2.698,2.698,2.761,2.878,3.054,3.307,3.672,3.678,3.474,3.169,2.958,2.806,2.723],
@@ -821,63 +829,60 @@ game.setObject({
   type: cube,
   position: {x:55, y:-395,z:0},
   rotation: {x:Math.PI,y:0,z:0},
-  scale: {x:1.8,y:1.8,z:1.8},
+  scale: {x:size+addC,y:size+addC,z:size+addC},
 });
 game.setObject({
   id: "cubeC2",
   type: cube,
   position: {x:-55, y:-395,z:0},
   rotation: {x:Math.PI,y:0,z:0},
-  scale: {x:1.8,y:1.8,z:1.8},
+  scale: {x:size+addC,y:size+addC,z:size+addC},
 });
 game.setObject({
   id: "cubeC3",
   type: cube,
   position: {x:55, y:-475,z:0},
   rotation: {x:Math.PI,y:0,z:0},
-  scale: {x:1.8,y:1.8,z:1.8},
+  scale: {x:size+addC,y:size+addC,z:size+addC},
 });
 game.setObject({
   id: "cubeC4",
   type: cube,
   position: {x:-55, y:-475,z:0},
   rotation: {x:Math.PI,y:0,z:0},
-  scale: {x:1.8,y:1.8,z:1.8},
+  scale: {x:size+addC,y:size+addC,z:size+addC},
 });
 
-for (let i = -45; i<=45; i+=10) {
+for (let i = -49; i<=50; i+=7) {
   game.setObject({
     id: `cubeTop${i}`,
     type: cube,
     position: {x:i, y:-395,z:0},
     rotation: {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5},
-    scale: {x:1.8,y:1.8,z:1.8},
+    scale: {x:size,y:size,z:size},
   });
-}
-for (let i = -45; i<=45; i+=10) {
   game.setObject({
     id: `cubeBottom${i}`,
     type: cube,
     position: {x:i, y:-475,z:0},
     rotation: {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5},
-    scale: {x:1.8,y:1.8,z:1.8},
+    scale: {x:size,y:size,z:size},
   });
 }
-for (let i=-405; i>=-465; i-=10) {
+
+for (let i=-400; i>=-475; i-=7) {
   game.setObject({
     id: `cubeLeft${i}`,
     type: cube,
     position: {x:55, y:i,z:0},
     rotation: {x:Math.PI,y:Math.PI/2,z:Math.PI},
-    scale: {x:1.8,y:1.8,z:1.8},
+    scale: {x:size,y:size,z:size},
   });
-}
-for (let i=-405; i>=-465; i-=10) {
   game.setObject({
     id: `cubeRight${i}`,
     type: cube,
     position: {x:-55, y:i,z:0},
     rotation: {x:Math.PI,y:Math.PI/2,z:Math.PI},
-    scale: {x:1.8,y:1.8,z:1.8},
+    scale: {x:size,y:size,z:size},
   });
 }
