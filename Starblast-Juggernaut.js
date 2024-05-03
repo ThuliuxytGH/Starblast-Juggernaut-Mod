@@ -44,7 +44,8 @@ const gameOptions = {
     NanoNemesis_609,
     Machete_610,
     Exodia_611,
-    Ark_X_612
+    Ark_X_612,
+    Wakizashi_613
   ],
   
   juggernauts: [
@@ -69,7 +70,7 @@ const gameOptions = {
     },
     1: { // "Hunters"
       hue: 0, // red
-      ships: [608, 605, 606, 607, 609, 610, 611, 612]
+      ships: [608, 605, 606, 607, 609, 610, 611, 612, 613]
     },
     2: {
       hue: 30, // orange
