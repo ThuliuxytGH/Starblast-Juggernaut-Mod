@@ -203,11 +203,31 @@ const map =
 
 
 const gameCommands = {
-  startNormal: {
-    usage: "startN <> <> <juggShip>",
+  normal: {
+    usage: "normal <juggType> <ID jugg> <ID flag>",
     description: "Used to start the game with one command and let the mod do the rest:\n<juggShip> Choose a specific ship for the juggernaut",
-    action: function(juggShip) {
-      // nan
+    action: function(juggType=undefined, IDjugg=undefined, IDflag=undefined) {
+      if (game.custom.memory.isJuggernaut !== undefined || game.custom.memory.isFlagShip !== undefined) {
+        gameCommands.log("The game is already running, you cannot use this command anymore", "red");
+        return;
+      }
+      if (typeof(juggType) == "number") {
+        game.custom.memory.juggType = juggType;
+      }
+      let newJugg;
+      if (IDjugg === undefined) {
+        newJugg = functions.usage.random(functions.usage.getPlayers().filter(ship => ship.alive));
+      } else {
+        newJugg = game.findShip(IDjugg);
+      }
+      let newFlag;
+      if (IDflag === undefined) {
+        newFlag = functions.usage.random(functions.usage.getPlayers().filter(ship => ship.alive && ship !== newJugg));
+      } else {
+        newFlag = game.findShip(IDflag);
+      }
+      functions.usage.selectJuggernaut(newJugg);
+      functions.usage.selectFlagShip(newFlag);
     }
   },
   setJugg: {
@@ -223,7 +243,6 @@ const gameCommands = {
         game.custom.memory.juggType = type;
       }
       functions.usage.selectJuggernaut(player);
-      for (let ship of game.ships) functions.usage.alert(ship, `Juggernaut`, `A Juggernaut just landed, stop it from capturing the points!`, "", `red`, 5000, {v1: 8, v2: 4, v3: 4});
       gameCommands.log("is now the juggernaut!", "green", player);
     }
   },
@@ -249,11 +268,7 @@ const gameCommands = {
         gameCommands.log("This player is already the flagship holder, try again with another valid ID.", "red", player);
         return;
       }
-      if (type !== undefined) {
-        
-      }
       functions.usage.selectFlagShip(player, type);
-      for (let ship of game.ships) functions.usage.alert(ship, `FlagShip`, `A FlagShip is now among us! Help it killing the juggernaut!`,"" , `red`, 5000, {v1: 8, v2: 4, v3: 4});
       gameCommands.log("is now the FlagShip!", "green", player);
     }
   },
@@ -391,6 +406,7 @@ var functions = {
       this.setShip(0, newJugg, game.custom.memory.juggType, {x:0, y:0});
       functions.buttons._switch.toggle(newJugg, false);
       functions.healthBar.updateUI(newJugg, false);
+      game.ships.filter(ship => ship !== newJugg).forEach(ship => {this.alert(ship, `Warning`, `Juggernaut class alien detected in the sector!`, `Juggernaut: ${newJugg.name}`, `red`, 5000, {v1: 8, v2: 5, v3: 3})});
       if (game.custom.initialized === false) { // start the game when first jugg is chosen
         game.custom.initialized = true;
       }
@@ -402,7 +418,7 @@ var functions = {
       this.setShip(1, jugg, newShipType, {x:0, y:-440});
       functions.buttons._switch.toggle(jugg, true, newShipType);
     },
-    selectFlagShip: function(newFlag, type=false) {
+    selectFlagShip: function(newFlag, type=undefined) {
       const oldFlag = game.custom.memory.isFlagShip;
       if (oldFlag) {
         const newShipType = this.random(gameOptions.teams[1].ships);
@@ -415,6 +431,7 @@ var functions = {
       if (newFlag.custom.isOutOfSpawn === false) {
         this.outOfSpawn(newFlag);
       }
+      this.alert(game.custom.memory.isJuggernaut, `Warning`, `Hostile human battalion detected in the sector!`, `FlagShip: ${newFlag.name}`, `red`, 5000, {v1: 8, v2: 5, v3: 3});
     },
     removeFlagShip: function(flag) {
       game.custom.memory.isFlagShip = undefined;
