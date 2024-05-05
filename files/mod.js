@@ -12,7 +12,7 @@ const gameOptions = {
   
   ships: [
     A_Speedster_605,
-    pulsor_Mk19_606,
+    Pulsor_606,
     Preculsor_607,
     Contraband_608,
     NanoNemesis_609,
@@ -38,8 +38,8 @@ const gameOptions = {
   
   teams: {
     0: { // "Juggernaut"
-      color: "RGBA(54, 241, 8, 0.35)",
-      hue: 90, // green
+      color: "RGBA(13, 191, 25, 0.35)",
+      hue: 110, // green
       ships: [799, 798, 797]
     },
     1: { // "Hunters"
@@ -179,7 +179,7 @@ const map =
 "                                                                                                    \n"+
 "                                                                                                    ";
 
-setTimeout(() => {game.custom.started||prepareGame()}, 200);
+setTimeout(() => {game.custom.started||prepareGame()}, 400);
 
 this.options = {
   root_mode: "",
@@ -203,6 +203,7 @@ const gameCommands = {
     usage: "normal <juggType> <ID jugg> <ID flag>",
     description: "Used to start the game with one command and let the mod do the rest:\n<juggShip> Choose a specific ship for the juggernaut",
     action: function(juggType=undefined, IDjugg=undefined, IDflag=undefined) {
+      game.custom.memory.juggShield = 99999;
       if (game.custom.memory.isJuggernaut !== undefined || game.custom.memory.isFlagShip !== undefined) {
         gameCommands.log("The game is already running, you cannot use this command anymore", "red");
         return;
@@ -412,7 +413,6 @@ var functions = {
       jugg.custom.isOutOfSpawn = false;
       const newShipType = this.random(gameOptions.teams[1].ships);
       this.setShip(1, jugg, newShipType, {x:0, y:-440});
-      functions.buttons._switch.toggle(jugg, true, newShipType);
     },
     selectFlagShip: function(newFlag, type=undefined) {
       const oldFlag = game.custom.memory.isFlagShip;
@@ -435,7 +435,6 @@ var functions = {
       flag.custom.isOutOfSpawn = false;
       const newShipType = this.random(gameOptions.teams[1].ships);
       this.setShip(1, flag, newShipType, {x:0, y:-440});
-      functions.buttons._switch.toggle(flag, true, newShipType);
       functions.healthBar.updateUI(flag, false);
     },
     spawn: function(ship) { // manage spawn
@@ -447,11 +446,10 @@ var functions = {
       }
       this.setShip(1, ship, 605, {x:0, y:-450});
       ship.custom.initialized = true;
-      
       Object.entries(game.custom.memory.pointsInfo).forEach(([key, value]) => {game.setUIComponent(value.UI)})
       game.setUIComponent(game.custom.memory.radarBackground);
-      
-      this.alert(ship, `Juggernaut`, `Created by:`, "Thuliux and Megalodon", `yellow`, 7500, {v1: 12, v2: 3, v3: 4});
+      this.UIblocker(ship);
+      this.alert(ship, `Juggernaut`, `Created by:`, "Thuliux and Megalodon", `yellow`, 7000, {v1: 12, v2: 3, v3: 4});
     },
     outOfSpawn: function(ship) {
       ship.set({x:ship.x, y:-380});
@@ -492,6 +490,25 @@ var functions = {
 		      case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
 		    }
       }
+    },
+    UIblocker: function(ship) {
+      var key = 8;
+      ship.setUIComponent({
+        id: "stats_upgrades_"+key+"_button_blocker",
+        position: [10*key-10,92,10,8],
+        clickable: true,
+        visible: true,
+        shortcut: key.toString(),
+        components: []
+      });
+      ship.setUIComponent({
+        id: "buy_lifes_blocker",
+        visible: true,
+        clickable: true,
+        shortcut: String.fromCharCode(187),
+        position: [65,0,10,10],
+        components: []
+      });
     }
   },
   buttons: {
@@ -563,7 +580,7 @@ var functions = {
             {type: "box", position: [0, 10, 100, 78], stroke: "#cf3131", width: 2},
             {type: "box", position: [0, 10, ((Math.round(jug.shield)/this.finder(typeship).specs.shield.capacity[1]) * 100), 78], fill: "#cf3131"},
             {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [${this.finder(typeship).typespec.name}]`, color: "#ffffff"},
-            {type: "text", position: [1, 21.77, 100, 54.55], align: "left", value: `🛡${Math.trunc((game.custom.memory.juggShield)/10)/100}K`, color: "#fffff"},
+            {type: "text", position: [1, 21.77, 100, 54.55], align: "left", value: `🛡️${Math.trunc((game.custom.memory.juggShield)/10)/100}K`, color: "#fffff"},
           ]
         });
       } catch(e) {
@@ -592,14 +609,14 @@ var functions = {
   updateScoreboard: function(game) {
     const sortedShips = {
       juggernaut: game.custom.memory.isJuggernaut?[game.custom.memory.isJuggernaut]:[],
-      players: [game.custom.memory.isFlagShip?[game.custom.memory.isFlagShip]:[], functions.usage.getPlayers().sort((b,a) => b.score - a.score)].flat(Infinity)
+      players: [game.custom.memory.isFlagShip?[game.custom.memory.isFlagShip]:[], functions.usage.getPlayers().sort((a,b) => b.score - a.score)].flat(Infinity)
     };
     const Scoreboard = {
       id: "scoreboard",
       clickable: false,
       visible: true,
       components: [
-        { type: "box", position: [0, 0, 100, 9.75], fill: "RGBA(54, 241, 8, 0.35)" },
+        { type: "box", position: [0, 0, 100, 9.75], fill: "RGBA(13, 191, 25, 0.35)" },
         { type: "text", position: [3, 0.75, 69, 8], value: "Juggernaut", color: "rgba(255,255,255,0.8)", align: "left" },
         
         ...sortedShips.juggernaut.map((ship, i) => [ // takes all of the juggs and displays them
@@ -676,6 +693,46 @@ var points = {
     1: {x:-430, y:410},
     2: {x:-105, y:-260}
   },
+  distance: function(e, t) {
+    return Math.sqrt(e * e + t * t)
+  },
+  shortestPath: function(shipx, shipy, pointx, pointy) {
+    var n = 5 * 100;
+    var a = [
+        [pointx - shipx, pointy - shipy],
+        [pointx + 2 * n - shipx, pointy - shipy],
+        [pointx - 2 * n - shipx, pointy - shipy],
+        [pointx - shipx, pointy + 2 * n - shipy],
+        [pointx - shipx, pointy - 2 * n - shipy],
+        [pointx + 2 * n - shipx, pointy + 2 * n - shipy],
+        [pointx + 2 * n - shipx, pointy - 2 * n - shipy],
+        [pointx - 2 * n - shipx, pointy + 2 * n - shipy],
+        [pointx - 2 * n - shipx, pointy - 2 * n - shipy]
+      ];
+    let s = 1 / 0, r = [0, 0];
+    for (let e = 0; e < a.length; e++) {
+      var t = this.distance(a[e][0], a[e][1]);
+      t < s && (s = t, r = a[e])
+    }
+    return r
+  },
+  addPath: function(type, ship, point, value, color="200,200,200") {
+    var path = this.shortestPath(ship.x, ship.y, point.x, point.y)
+    var distance = this.distance(path[0], path[1])
+    const visuals = (type==="juggernaut") ?
+    {type: "box", position: [38.5, 44, 23, 40], fill: `rgba(${color}, 0.6)`, stroke: "#CDE", width: 2} :
+    {type: "round", position: [36.5, 40, 27.5, 47.5], fill: `rgba(${color}, 0.6)`, stroke: "#CDE", width: 2}
+    ship.setUIComponent({
+      id: `path${type}${value}`,
+      position: [45 + path[0] / distance * 25, 45 - path[1] / distance * 25, 8, 8],
+      clickable: false,
+      visible: true,
+      components: [
+        visuals,
+        {type: "text", position: [0, 46, 100, 38], value: value, color: "#CDE", align: "center"}
+      ]
+    })
+  },
   allCaptured: function() {
     let capCount = 0;
     for (let i = 0; i < 3; i++) {
@@ -702,7 +759,7 @@ var points = {
       memoUI.UI.components[2].fill = "RGB(207, 49, 49)";
       memoUI.UI.components[3].color = "#ffffff";
       memoUI.UI.components[4].value = `${capState}%`;
-      memoUI.UI.components[5].value = `🔒`;
+      memoUI.UI.components[5].value = `🔒️`;
     } else if (capState <= 99 && capState > 0) {
       state = 1;
       memory.pointsInfo[ID].captureState -= decay;
@@ -715,15 +772,15 @@ var points = {
       memoUI.UI.components[2].fill = "RGB(255, 255, 255)";
       memoUI.UI.components[3].color = "RGB(55, 55, 55)";
       memoUI.UI.components[4].value = `${capState}%`;
-      memoUI.UI.components[5].value = `🛡️️`;
+      memoUI.UI.components[5].value = `🛡️`;
     } else {
       state = 2;
-      memory.radarBackground.components[ID].stroke = "RGBA(54, 241, 8, 0.6)";
-      memoUI.UI.components[0].fill = "RGBA(54, 241, 8)";
-      memoUI.UI.components[0].stroke = "RGB(54, 241, 8)";
+      memory.radarBackground.components[ID].stroke = "RGBA(13, 191, 25, 0.6)";
+      memoUI.UI.components[0].fill = "RGBA(13, 191, 25)";
+      memoUI.UI.components[0].stroke = "RGB(13, 191, 25)";
       memoUI.UI.components[1].position[2] = (capState/100)*97;
-      memoUI.UI.components[1].fill = "RGBA(54, 241, 8, 0.8)";
-      memoUI.UI.components[2].fill = "RGB(54, 241, 8)";
+      memoUI.UI.components[1].fill = "RGBA(13, 191, 25, 0.8)";
+      memoUI.UI.components[2].fill = "RGB(13, 191, 25)";
       memoUI.UI.components[3].color = "#ffffff";
       memoUI.UI.components[4].value = `Captured`;
       memoUI.UI.components[5].value = `⚠️`;
@@ -736,7 +793,7 @@ var points = {
     this.primPoint(ID, state);
   },
   primPoint: function(ID, state) {
-    for (let k of [0,1,2]) {
+    for (let k of Object.keys(this.points).map(Number).filter(i => i !== state)) {
       game.setObject({
         id: `point_${ID}-${k}`,
         type: {
@@ -822,10 +879,14 @@ var points = {
     });
   },
   findRealName: function(i) {
-    switch(i) {
-      case 0: return"A";
-      case 1: return"B";
-      case 2: return"C";
+    const names = ["A", "B", "C", "D", "E"];
+    return names[i] || "";
+  },
+  getCapColor: function(capState) {
+    switch(true) {
+      case capState > 99: return "207, 49, 49";
+      case capState <= 99 && capState > 0: return "255, 255, 255";
+      case capState <= 0: return "13, 191, 25";
     }
   },
   pointsLocation: function(ship, x, y, radius) {
@@ -834,7 +895,6 @@ var points = {
 }
 
 function spawnObjects() {
-  
   // Added spawn images + text
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("text",17,-452,20,20,"rgba(255,20,20,1)","Spawn"));
   game.setObject({
@@ -848,7 +908,6 @@ function spawnObjects() {
     rotation: {x:Math.PI/2,y:Math.PI,z:0},
     scale: {x:28,y:1,z:7.8},
   });
-  
   // generates the cubes with the correct radar image
   function addCube(id, x, y, scale, rotation, spot=true) {
     if (spot) game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box", x, y, scale, scale, "rgba(255,20,20,0.6)"));
@@ -861,7 +920,7 @@ function spawnObjects() {
         emissive: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/emissive.jpg",
         bump: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/bump.jpg",
         specularColor: 0xFF8040,
-        shininess: 4,
+        shininess: 2,
         physics: {
           mass: 500,
           shape: [2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.308,3.048,2.878,2.759,2.697,2.697,2.759,2.878,3.048,3.308,3.672,3.678,3.474,3.169,2.958,2.806,2.723,2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.307,3.054,2.878,2.761,2.698,2.698,2.761,2.878,3.054,3.307,3.672,3.678,3.474,3.169,2.958,2.806,2.723],
@@ -873,16 +932,13 @@ function spawnObjects() {
       scale: {x:scale,y:scale,z:scale},
     });
   };
-  
   var size = 1.4;
   var addC = 0.5;
-  
   // edges
   addCube("cubeC1", 55, -395, size+addC, {x:Math.PI,y:0,z:0});
   addCube("cubeC2", -55, -395, size+addC, {x:Math.PI,y:0,z:0});
   addCube("cubeC3", 55, -475, size+addC, {x:Math.PI,y:0,z:0});
   addCube("cubeC4", -55, -475, size+addC, {x:Math.PI,y:0,z:0});
-  
   // top and bottom line
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",-40,-396,size+21,size,"rgba(255,20,20,0.6)"));
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",-40,-476,size+21,size,"rgba(255,20,20,0.6)"));
@@ -890,7 +946,6 @@ function spawnObjects() {
     addCube(`cubeTop${i}`, i, -395, size, {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5}, false);
     addCube(`cubeBottom${i}`, i, -475, size, {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5}, false);
   }
-  
   // left and right line
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",56,-405,size,size+15,"rgba(255,20,20,0.6)"));
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",-54,-405,size,size+15,"rgba(255,20,20,0.6)"));
@@ -903,25 +958,28 @@ function spawnObjects() {
 this.tick = function(game) {
   if (game.step % 60 === 0) {
     functions.updateScoreboard(game);
-    for (let i = 0; i < 3; i++) {
+    if (points.allCaptured() && game.custom.memory.isJuggernaut !== null) {
+      functions.endGame.players(game);
+      return;
+    }
+    for (let i = 0; i < Object.keys(points.points).length; i++) {
+      points.addPath("points", game.custom.memory.isJuggernaut, {x:points.points[i].x,y:points.points[i].y}, points.findRealName(i), points.getCapColor(game.custom.memory.pointsInfo[i].captureState));
       if (points.pointsLocation(game.custom.memory.isJuggernaut, points.points[i].x, points.points[i].y, 48)) {
         points.manage(i);
       } 
-    }
-    if (points.allCaptured()) {
-      functions.endGame.players(game);
     }
   }
   if (game.step % 20 === 0) {
     if (game.custom.memory.isJuggernaut === null) {
       const newJugg = functions.usage.random(functions.usage.getPlayers());
-      const newFlag = functions.usage.random(functions.usage.getPlayers().filter(ship => ship!=newJugg));
       functions.usage.selectJuggernaut(newJugg);
-      functions.usage.selectFlagShip(newFlag);
     }
     functions.usage.getPlayers().concat(game.custom.memory.isFlagShip).forEach(ship => { // loop for players
       if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
-      if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) functions.healthBar.updateUI(ship, true);
+      if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) {
+        functions.healthBar.updateUI(ship, true);
+        points.addPath("juggernaut", ship, game.custom.memory.isJuggernaut, "👾", "13, 255, 25");
+      }
     });
   }
 };
@@ -1009,5 +1067,6 @@ function prepareGame() {
   echo(`\n[[i;#85ff70;]  Started % Log-enabled\n`);
   game.custom.started = true;
   game.custom.initialized = false;
+  game.custom.memory.juggShield = 99999;
   setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
 }
