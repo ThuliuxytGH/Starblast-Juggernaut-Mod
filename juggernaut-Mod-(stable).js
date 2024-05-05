@@ -37,7 +37,7 @@ const gameOptions = {
   
   ships: [
     A_Speedster_605,
-    pulsor_Mk19_606,
+    Pulsor_606,
     Preculsor_607,
     Contraband_608,
     NanoNemesis_609,
