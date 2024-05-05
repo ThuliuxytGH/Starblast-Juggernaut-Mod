@@ -43,7 +43,8 @@ const gameOptions = {
     NanoNemesis_609,
     Machete_610,
     Exodia_611,
-    Ark_X_612
+    Ark_X_612,
+    Wakizashi_613
   ],
   
   juggernauts: [
@@ -401,7 +402,7 @@ var functions = {
     random: function(list) { // returns a random object of a list
       return list[Math.floor(Math.random() * list.length)];
     },
-   setShip: function(team, ship, type, coords = {x: undefined, y: undefined}) {
+    setShip: function(team, ship, type, coords = {x: undefined, y: undefined}) {
       ship.set({
         team: team==2?1:team,
         hue: gameOptions.teams[team].hue,
@@ -517,15 +518,6 @@ var functions = {
       }
     },
     UIblocker: function(ship) {
-      var key = 8;
-      ship.setUIComponent({
-        id: "stats_upgrades_"+key+"_button_blocker",
-        position: [10*key-10,92,10,8],
-        clickable: true,
-        visible: true,
-        shortcut: key.toString(),
-        components: []
-      });
       ship.setUIComponent({
         id: "buy_lifes_blocker",
         visible: true,
@@ -608,19 +600,7 @@ var functions = {
             {type: "text", position: [1, 21.77, 100, 54.55], align: "left", value: `🛡️${Math.trunc((game.custom.memory.juggShield)/10)/100}K`, color: "#fffff"},
           ]
         });
-      } catch(e) {
-        ship.setUIComponent({
-          id: "juggHealthBar",
-          position: [0,0,0,0],
-          clickable: false,
-          visible: false,
-          components: [
-            {type: "box", position: [0, 10, 100, 78], stroke: "#cf3131", width: 2},
-            {type: "box", position: [25, 10, 50, 78], fill: "#cf313199"},
-            {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [none]`, color: "#ffffff"},
-          ]
-        });
-      }
+      } catch(e) {ship.setUIComponent({id: "juggHealthBar",position: [0,0,0,0],visible: false})}
     }
   },
   findColor: function(ship) {
@@ -945,9 +925,9 @@ function spawnObjects() {
         emissive: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/emissive.jpg",
         bump: "https://raw.githubusercontent.com/pmgl/starblast-modding/master/objects/cube/bump.jpg",
         specularColor: 0xFF8040,
-        shininess: 2,
+        shininess: 0,
         physics: {
-          mass: 500,
+          mass: 100,
           shape: [2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.308,3.048,2.878,2.759,2.697,2.697,2.759,2.878,3.048,3.308,3.672,3.678,3.474,3.169,2.958,2.806,2.723,2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.307,3.054,2.878,2.761,2.698,2.698,2.761,2.878,3.054,3.307,3.672,3.678,3.474,3.169,2.958,2.806,2.723],
           fixed: true
         },
@@ -999,13 +979,17 @@ this.tick = function(game) {
       const newJugg = functions.usage.random(functions.usage.getPlayers());
       functions.usage.selectJuggernaut(newJugg);
     }
-    functions.usage.getPlayers().concat(game.custom.memory.isFlagShip).forEach(ship => { // loop for players
-      if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) functions.usage.outOfSpawn(ship);
+    for (let ship of game.ships) {
+      if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) {
+        functions.usage.outOfSpawn(ship);
+      }
+    }
+    for (let ship of game.ships.filter(ship => ship !== game.custom.memory.isJuggernaut)) {
       if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) {
         functions.healthBar.updateUI(ship, true);
         points.addPath("juggernaut", ship, game.custom.memory.isJuggernaut, "👾", "13, 255, 25");
       }
-    });
+    }
   }
 };
 
