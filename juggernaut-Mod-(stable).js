@@ -503,18 +503,18 @@ var functions = {
       positize: function (x) { 
         return Math.max(x, 0) || 0;
       },
-		  X: function(x, size) {
-			  return this.positize((x + 100 * 5 - size) * this.zoom);
-		  },
-		  Y: function(y, size) {
-			  return this.positize((-y + 100 * 5 - size) * this.zoom);
-		  },
-		  addRadarSpot: function(type,x,y,width,height,color="rgba(255,255,255,0.6)",value=undefined) {
-		    switch(type) {
-		      case "box":return{type:type, position:[this.X(x, width/2),this.Y(y, height/2),width/2,height/2], fill:color};
-		      case "round":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], stroke:color, width: 2};
-		      case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
-		    }
+      X: function(x, size) {
+	return this.positize((x + 100 * 5 - size) * this.zoom);
+      },
+      Y: function(y, size) {
+	return this.positize((-y + 100 * 5 - size) * this.zoom);
+      },
+      addRadarSpot: function(type,x,y,width,height,color="rgba(255,255,255,0.6)",value=undefined) {
+        switch(type) {
+	  case "box":return{type:type, position:[this.X(x, width/2),this.Y(y, height/2),width/2,height/2], fill:color};
+	  case "round":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], stroke:color, width: 2};
+	  case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
+        }
       }
     },
     UIblocker: function(ship) {
@@ -965,7 +965,6 @@ this.tick = function(game) {
     functions.updateScoreboard(game);
     if (points.allCaptured() && game.custom.memory.isJuggernaut !== null) {
       functions.endGame.players(game);
-      return;
     }
     for (let i = 0; i < Object.keys(points.points).length; i++) {
       points.addPath("points", game.custom.memory.isJuggernaut, {x:points.points[i].x,y:points.points[i].y}, points.findRealName(i), points.getCapColor(game.custom.memory.pointsInfo[i].captureState));
