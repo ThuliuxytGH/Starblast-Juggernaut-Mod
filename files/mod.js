@@ -37,7 +37,7 @@ const gameOptions = {
     Fly_101
   ],
   
-  captureSpeed: 2, // 2
+  captureSpeed: 100, // 2
   roundsAmount: 3,
   
   colors: {
@@ -391,6 +391,7 @@ var functions = {
   },
   setShip: function(team, ship, type, coords = {x: undefined, y: undefined}) {
     ship.set({
+      collider: true,
       team: team==2?1:team,
       hue: gameOptions.teams[team].hue,
       shield: ship === game.custom.memory.isJuggernaut ? game.custom.memory.juggShield : 999999,
@@ -398,8 +399,7 @@ var functions = {
       type: type,
       crystals: team === 1 ? 720:1280,
       x: coords.x,
-      y: coords.y,
-      collider: true
+      y: coords.y
     });
   },
   getPlayers: function() {
@@ -425,10 +425,9 @@ var functions = {
   removeJuggernaut: function(jugg) {
     game.custom.memory.isJuggernaut = undefined;
     jugg.custom.isOutOfSpawn = false;
-    const newShipType = this.random(gameOptions.teams[1].ships);
-    this.setShip(1, jugg, newShipType, {x:0, y:-440});
-    functions.shipSwitch.toggle(jugg, true);
-    functions.healthBar.updateUI(jugg, false);
+    this.setShip(1, jugg, this.random(gameOptions.teams[1].ships), {x:0, y:-440});
+    for (let i = 0; i < Object.keys(points.points).length; i++) jugg.setUIComponent({id: `pathpoints${points.findRealName(i)}`,position: [0,0,0,0],visible: false});
+    this.spawn(jugg);
   },
   selectFlagShip: function(newFlag, type=undefined) {
     const oldFlag = game.custom.memory.isFlagShip;
@@ -449,9 +448,8 @@ var functions = {
   removeFlagShip: function(flag) {
     game.custom.memory.isFlagShip = undefined;
     flag.custom.isOutOfSpawn = false;
-    const newShipType = this.random(gameOptions.teams[1].ships);
-    this.setShip(1, flag, newShipType, {x:0, y:-440});
-    functions.healthBar.updateUI(flag, false);
+    this.setShip(1, flag, this.random(gameOptions.teams[1].ships), {x:0, y:-440});
+    this.spawn(flag);
   },
   spawn: function(ship) { // manage spawn
     ship.custom.isOutOfSpawn = false;
@@ -474,49 +472,49 @@ var functions = {
     this.alert(ship, `Playing`, `You're out of the spawn!`, "", `yellow`, 3000, {v1: 8, v2: 4, v3: 4});
   },
   alert: function(ship, value1, value2="", value3="", color="none", time=3000, i={v1: 4, v2: 4, v3: 4}) {
-      clearTimeout(ship.custom.logtimeout);
-      ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "alertText", visible: false, position: [0, 0, 0, 0]})}, time);
-      ship.setUIComponent({
-        id: "alertText",
-        position: [-5, -5, 110, 110],
-        clickable: false,
-        visible: true,
-        components: [
-          {type: "text", position: [0, 20, 100, i.v1], color: gameCommands.findColor(color), value: value1},
-          {type: "text", position: [0, 25+(i.v1-i.v2), 100, i.v2], color: gameCommands.findColor(color), value: value2},
-          {type: "text", position: [0, 30+(i.v2-i.v3)+(i.v1-i.v2), 100, i.v3], color: gameCommands.findColor(color), value: value3},
-        ]
-      });
-    },
+    clearTimeout(ship.custom.logtimeout);
+    ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "alertText", visible: false, position: [0, 0, 0, 0]})}, time);
+    ship.setUIComponent({
+      id: "alertText",
+      position: [-5, -5, 110, 110],
+      clickable: false,
+      visible: true,
+      components: [
+        {type: "text", position: [0, 20, 100, i.v1], color: gameCommands.findColor(color), value: value1},
+        {type: "text", position: [0, 25+(i.v1-i.v2), 100, i.v2], color: gameCommands.findColor(color), value: value2},
+        {type: "text", position: [0, 30+(i.v2-i.v3)+(i.v1-i.v2), 100, i.v3], color: gameCommands.findColor(color), value: value3},
+      ]
+    });
+  },
   radarPos: {
-      zoom: 10 / 100,
-      positize: function (x) { 
-        return Math.max(x, 0) || 0;
-      },
-		  X: function(x, size) {
-			  return this.positize((x + 100 * 5 - size) * this.zoom);
-		  },
-		  Y: function(y, size) {
-			  return this.positize((-y + 100 * 5 - size) * this.zoom);
-		  },
-		  addRadarSpot: function(type,x,y,width,height,color="rgba(255,255,255,0.6)",value=undefined) {
-		    switch(type) {
-		      case "box":return{type:type, position:[this.X(x, width/2),this.Y(y, height/2),width/2,height/2], fill:color};
-		      case "round":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], stroke:color, width: 2};
-		      case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
-		    }
-      }
+    zoom: 10 / 100,
+    positize: function (x) { 
+      return Math.max(x, 0) || 0;
     },
+		X: function(x, size) {
+		  return this.positize((x + 100 * 5 - size) * this.zoom);
+		},
+		Y: function(y, size) {
+			return this.positize((-y + 100 * 5 - size) * this.zoom);
+		},
+		addRadarSpot: function(type,x,y,width,height,color="rgba(255,255,255,0.6)",value=undefined) {
+		  switch(type) {
+		    case "box":return{type:type, position:[this.X(x, width/2),this.Y(y, height/2),width/2,height/2], fill:color};
+		    case "round":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], stroke:color, width: 2};
+		    case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
+		  }
+    }
+  },
   UIblocker: function(ship) {
-      ship.setUIComponent({
-        id: "buy_lifes_blocker",
-        visible: true,
-        clickable: true,
-        shortcut: String.fromCharCode(187),
-        position: [65,0,10,10],
-        components: []
-      });
-    },
+    ship.setUIComponent({
+      id: "buy_lifes_blocker",
+      visible: true,
+      clickable: true,
+      shortcut: String.fromCharCode(187),
+      position: [65,0,10,10],
+      components: []
+    });
+  },
   shipSwitch: {
     toggle: function(ship, visible, type=false) {
       // background
@@ -524,6 +522,7 @@ var functions = {
       // buttons
       const list = game.custom.memory.shipsInfo;
       list.forEach((value, index) => {
+        echo(value)
         ship.setUIComponent({
           id: `shipSwitch|${value.name}`,
           position: visible ? this.nextPos(index) : [0,0,0,0],
@@ -665,7 +664,7 @@ var functions = {
         memoUI.UI.components[3].color = "#ffffff";
         memoUI.UI.components[4].value = `100%`;
         memoUI.UI.components[5].value = `🔒️`;
-        points.updateEverything(i,0);
+        points.updateEverything(i, 0);
       }
     },
     jugg: function(game) { // jugg lost
@@ -683,34 +682,20 @@ var functions = {
       setTimeout(() => {this.newRound("juggernaut")}, 6000);
     },
     newRound: function(winner) {
-      if (game.custom.memory.roundsResults.length-1 === gameOptions.roundsAmount) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (game.custom.memory.roundsResults.length+1 === gameOptions.roundsAmount) {
           for (let ship of game.ships) {
             ship.gameover({
               "Score":ship.score==0?"0":ship.score,
-              /*" ":" ",
-              ...roundsResults.map((value, index) => {
-                return [`Round ${index + 1}\n${value.pointsCaptured.map(el => el).join(",")}`];
-              }).flat(Infinity),*/
               winner:"won the match"
             });
           }
-        }, 4000);
-      } else {
-        functions.removeJuggernaut(game.custom.memory.isJuggernaut);
-        if (game.custom.memory.isFlagShip) functions.removeFlagShip(game.custom.memory.isFlagShip);
-        for (let ship of game.ships) functions.spawn(ship);
-        game.custom.memory.roundsResults.push(winner);
-        /*game.custom.memory.roundsResults.push({
-          winner: winner,
-          pointsCaptured: Object.entries(game.custom.memory.pointsInfo).map(([key, value]) => {
-            return {[functions.findRealName(key)]: value.captureState};
-          })
-        });*/
-        setTimeout(() => {
+        } else {
+          functions.removeJuggernaut(game.custom.memory.isJuggernaut);
+          functions.removeFlagShip(game.custom.memory.isFlagShip);
           functions.normalStart();
-        }, 4000);
-      }
+        }
+      }, 4000);
     }
   }
 };
@@ -949,7 +934,7 @@ function spawnObjects() {
         specularColor: 0xFF8040,
         shininess: 0,
         physics: {
-          mass: 100,
+          mass: 500,
           shape: [2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.308,3.048,2.878,2.759,2.697,2.697,2.759,2.878,3.048,3.308,3.672,3.678,3.474,3.169,2.958,2.806,2.723,2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.307,3.054,2.878,2.761,2.698,2.698,2.761,2.878,3.054,3.307,3.672,3.678,3.474,3.169,2.958,2.806,2.723],
           fixed: true
         },
