@@ -233,7 +233,7 @@ const gameCommands = {
     usage: "normal <juggType> <ID jugg> <ID flag>",
     description: "Used to start the game with one command and let the mod do the rest:\n<juggShip> Choose a specific ship for the juggernaut",
     action: function(juggType=undefined, IDjugg=undefined, IDflag=undefined) {
-      game.custom.memory.juggShield = 99999;
+      game.custom.memory.juggShield = 999999;
       if (game.custom.memory.isJuggernaut !== undefined || game.custom.memory.isFlagShip !== undefined) {
         gameCommands.log("The game is already running, you cannot use this command anymore", "red");
         return;
@@ -413,7 +413,7 @@ var functions = {
       ship.set({
         team: team==2?1:team,
         hue: gameOptions.teams[team].hue,
-        shield: ship === game.custom.memory.isJuggernaut ? game.custom.memory.juggShield : 99999,
+        shield: ship === game.custom.memory.isJuggernaut ? game.custom.memory.juggShield : 999999,
         stats: ship === game.custom.memory.isJuggernaut ? 00000000 : 66666666,
         type: type,
         crystals: team === 1 ? 720:1280,
@@ -1076,7 +1076,7 @@ function prepareGame() {
         return jsedStr;
       }),
       isJuggernaut: undefined,
-      juggShield: 99999,
+      juggShield: 999999,
       juggType: functions.usage.random(gameOptions.teams[0].ships),
       isFlagShip: undefined,
       pointsInfo: {
@@ -1109,6 +1109,6 @@ function prepareGame() {
   echo(`\n[[i;#85ff70;]  Started % Log-enabled\n`);
   game.custom.started = true;
   game.custom.initialized = false;
-  game.custom.memory.juggShield = 99999;
+  game.custom.memory.juggShield = 999999;
   setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
 }
