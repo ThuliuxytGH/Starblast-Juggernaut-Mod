@@ -27,6 +27,8 @@ var Predator_706 = '{"name":"Predator","level":7,"model":6,"size":6,"next":[],"s
 
 const gameOptions = { 
   
+  decaySpeed: 2,
+  
   info: {
     name: "Juggernaut",
     version: "0.7\n",
@@ -209,6 +211,8 @@ const map =
 "                                                                                                    \n"+
 "                                                                                                    ";
 
+// TO FIX, setTimeout
+
 setTimeout(() => {game.custom.started||prepareGame()}, 400);
 
 this.options = {
@@ -228,183 +232,38 @@ this.options = {
   speed_mod: 1.2,
 };
 
-const gameCommands = {
-  normal: {
-    usage: "normal <juggType> <ID jugg> <ID flag>",
-    description: "Used to start the game with one command and let the mod do the rest:\n<juggShip> Choose a specific ship for the juggernaut",
-    action: function(juggType=undefined, IDjugg=undefined, IDflag=undefined) {
-      game.custom.memory.juggShield = 999999;
-      if (game.custom.memory.isJuggernaut !== undefined || game.custom.memory.isFlagShip !== undefined) {
-        gameCommands.log("The game is already running, you cannot use this command anymore", "red");
-        return;
-      }
-      if (typeof(juggType) == "number") {
-        game.custom.memory.juggType = juggType;
-      }
-      let newJugg;
-      if (IDjugg === undefined) {
-        newJugg = functions.usage.random(functions.usage.getPlayers().filter(ship => ship.alive));
-      } else {
-        newJugg = game.findShip(IDjugg);
-      }
-      let newFlag;
-      if (IDflag === undefined) {
-        newFlag = functions.usage.random(functions.usage.getPlayers().filter(ship => ship.alive && ship !== newJugg));
-      } else {
-        newFlag = game.findShip(IDflag);
-      }
-      functions.usage.selectJuggernaut(newJugg);
-      functions.usage.selectFlagShip(newFlag);
-      newJugg.set({stats:77777777,shield:999999}); // game.findShip(i).set({String(game.ships.length).repeat(8)})
-      let base = game.ships.length - 2;
-      newJugg.set({stats: Number(String(base < 7 ? base : 7).repeat(8))});//newJugg.set({stats:String(game.ships.length-1).repeat(8),shield:999999});
-    }
-  },
-  setJugg: {
-    usage: "setJugg <ID> <type>",
-    description: "Used to Choose a new Juggernaut:\n<ID> Choose a specific player\n<type> choose a specific juggernaut ship to use",
-    action: function(ID, type=undefined) {
-      let player = game.findShip(ID);
-      if (player === game.custom.memory.isJuggernaut) {
-        gameCommands.log("is already the juggernaut, try again with another valid ID.", "red", player);
-        return;
-      }
-      if (type !== undefined) {
-        game.custom.memory.juggType = type;
-      }
-      functions.usage.selectJuggernaut(player);
-      gameCommands.log("is now the juggernaut!", "green", player);
-    }
-  },
-  remJugg: {
-    usage: "remJugg",
-    description: "Used to remove the current Juggernaut",
-    action: function() {
-      let player = game.custom.memory.isJuggernaut;
-      if (player === undefined) {
-        gameCommands.log("There are no juggernaut in the game", "red", player);
-        return;
-      }
-      functions.usage.removeJuggernaut(player);
-      gameCommands.log("is now back as a normal player.", "orange", player);
-    }
-  },
-  setFlag: {
-    usage: "setFlag <ID> <type>",
-    description: "Used to Choose a new FlagShip:\n<ID> Choose a specific player\n<type> choose a specific flagShip to use",
-    action: function(ID, type=undefined) {
-      let player = game.findShip(ID);
-      if (player === game.custom.memory.isFlagShip) {
-        gameCommands.log("This player is already the flagship holder, try again with another valid ID.", "red", player);
-        return;
-      }
-      functions.usage.selectFlagShip(player, type);
-      gameCommands.log("is now the FlagShip!", "green", player);
-    }
-  },
-  remFlag: {
-    usage: "remFlag",
-    description: "Used to remove the current FlagShip",
-    action: function() {
-      let player = game.custom.memory.isFlagShip;
-      if (player === undefined) {
-        gameCommands.log("There are no flagship in the game", "red", player);
-        return;
-      }
-      functions.usage.removeFlagShip(player);
-      gameCommands.log("is now back as a normal player.", "orange", player);
-    }
-  },
-  info: {
-    usage: "info <commands>|<players>",
-    description: "Allows you to see all of the informations about:\n<commands> Shows every commands on the mod\n<players> Shows the player list\n",
-    action: function(type) {
-      switch(type) {
-        default: gameCommands.log(`Wrong Input`, "red"); break;
-        case "commands":
-          const commandDescriptions = Object.keys(gameCommands)
-            .filter(command => ![ 'findColor', 'log', 'getArguments', 'resolveCommands' ].includes(command))
-            .map(command => { 
-              const { usage, description } = gameCommands[command];
-              return `[[guib;#85ff70;]Command:] [[g;Gold;]${usage}] \n[[i;#70dcff;]${description}]`;
-            }).join("\n");
-          game.modding.terminal.echo(`${commandDescriptions}`);
-          break;
-        case "players":
-          const playerList = {
-            jugg: game.custom.memory.isJuggernaut?`[[i;#70dcff;]ID:] [[g;Gold;]${game.custom.memory.isJuggernaut.id}][[i;#70dcff;], Name:] [[g;Gold;]${game.custom.memory.isJuggernaut.name.replace(/[\[\]]/g, '|')}]`:`[[g;#70aeff;]None]`,
-            flag: game.custom.memory.isFlagShip?`[[i;#70dcff;]ID:] [[g;Gold;]${game.custom.memory.isFlagShip.id}][[i;#70dcff;], Name:] [[g;Gold;]${game.custom.memory.isFlagShip.name.replace(/[\[\]]/g, '|')}]`:`[[g;#70aeff;]None]`,
-            play: game.ships.filter(ship => ship !== game.custom.memory.isFlagShip && ship !== game.custom.memory.isJuggernaut)
-              .map(ship => `[[i;#70dcff;]ID:] [[g;Gold;]${ship.id}][[i;#70dcff;], Name:] [[g;Gold;]${ship.name.replace(/[\[\]]/g, '|')}]`)
-              .join("\n"),
-          };
-          game.modding.terminal.echo(`[[g;#fffc70;]Amount of players:] [[gb;#fffc70;]${game.ships.length}]\n`);
-          game.modding.terminal.echo(`[[gu;#36f108;]Juggernaut][[g;#36f108;] -] ${playerList.jugg}`);
-          game.modding.terminal.echo(`[[gu;#f10d0d;]FlagShip][[g;#36f108;] -] ${playerList.flag}\n`);
-          game.modding.terminal.echo(`[[gu;#70aeff;]Players][[g;#70aeff;]:] \n${playerList.play||"[[g;#70aeff;]None]"}\n`);
-          break;
-      }
-
-    }
-  },
-  findColor: function(color) { // do colors
-    switch(color) {
-      case "none": return;
-      case "green": return "#70ffc1";
-      case "red": return "#ff7070";
-      case "orange": return "#ffb670";
-      case "lightblue": return "#70dcff";
-      case "yellow": return "#fff870";
-      default: return "#ffffff";
-    }
-  },
-  log: function(action, color, ship) { // simply to write stuff in the console
-    const newColor = gameCommands.findColor(color);
-    const player = ship ? `[[g;${newColor};]Player:] [[g;Gold;]${ship.name}][[g;${newColor};], ID:] [[g;Gold;]${ship.id}][[g;${newColor};], ` : "";
-    game.modding.terminal.echo(`${player}[[g;${newColor};]${action}]\n`);
-  },
-  getArguments: function (cmd) { // do the actual stuff for the cpmmands
-    cmd = cmd.trim();
-    let args = [];
-    if (cmd.length < 1) return args;
-    let separator = `"'`.includes(cmd[0]) ? cmd[0] : ' ';
-    let i = separator == ' ' ? 0 : 1;
-    for (; i < cmd.length; ++i) {
-      let index = i;
-      while (index < cmd.length && (cmd[index] != separator || (cmd.slice(i, index).match(/\\+$/) || [''])[0].length % 2)) ++index;
-      let lit = separator == ' ' ? '"' : separator;
-      let value = eval(lit + cmd.slice(i, index) + lit);
-      if (!isNaN(value)) value = +value;
-      args.push(value);
-      ++index;
-      while (index < cmd.length) {
-        if (cmd[index] == ' ') {
-          ++index;
-          continue;
-        }
-        if ((cmd[index] == '"' || cmd[index] == "'") && !((cmd.slice(i, index).match(/\\+$/) || [''])[0].length % 2)) {
-          separator = cmd[index];
-          break;
-        }
-        separator = ' ';
-        --index;
-        break;
-      }
-      i = index;
-    }
-    return args;
-  },
-  resolveCommands: function () { // resolve commands 
-    for (let i in gameCommands) {
-      if (i == 'getPlayerName' || i == `findAvailableID` || i == `getArguments` || i == `log` || i == `resolveCommands`) continue;
-      game.modding.commands[i] = function (req) {
-        return gameCommands[i].action(...this.getArguments(req.replace(i + " ", "")));
-      }.bind(this);
-    }
-  }
-};
-
 var functions = {
+  startGame: function(juggType=undefined, IDjugg=undefined, IDflag=undefined) {
+    game.custom.memory.juggShield = 999999;
+    if (typeof(juggType) == "number") {
+      game.custom.memory.juggType = juggType;
+    }
+    let newJugg;
+    if (IDjugg === undefined) {
+      newJugg = functions.usage.random(functions.usage.getPlayers().filter(ship => ship.alive));
+    } else {
+      newJugg = game.findShip(IDjugg);
+    }
+    let newFlag;
+    if (IDflag === undefined) {
+      newFlag = functions.usage.random(functions.usage.getPlayers().filter(ship => ship.alive && ship !== newJugg));
+    } else {
+      newFlag = game.findShip(IDflag);
+    }
+    functions.usage.selectJuggernaut(newJugg);
+    functions.usage.selectFlagShip(newFlag);
+    newJugg.set({stats:77777777,shield:999999}); // game.findShip(i).set({String(game.ships.length).repeat(8)})
+    let base = game.ships.length - 2;
+    newJugg.set({stats: Number(String(base < 7 ? base : 7).repeat(8))});//newJugg.set({stats:String(game.ships.length-1).repeat(8),shield:999999});
+  },
+  time: 60,
+  startingTimer: function(game) {
+    functions.usage.alert(game, `Waiting for more players`, `${this.time--}`, `${3-game.ships.length} players needed`, `yellow`, 2000, {v1: 6, v2: 6, v3: 4});
+    if (this.time <= 0 || game.ships.length >= 6) {
+      game.custom.initialized = true;
+      this.startGame(game);
+    }
+  },
   usage: {
     random: function(list) { // returns a random object of a list
       return list[Math.floor(Math.random() * list.length)];
@@ -437,9 +296,6 @@ var functions = {
       functions.buttons._switch.toggle(newJugg, false);
       functions.healthJugg(newJugg, false);
       game.ships.filter(ship => ship !== newJugg).forEach(ship => {this.alert(ship, `Warning`, `Juggernaut class alien detected in the sector!`, `Juggernaut: ${newJugg.name}`, `red`, 5000, {v1: 8, v2: 5, v3: 3})});
-      if (game.custom.initialized === false) { // start the game when first jugg is chosen
-        game.custom.initialized = true;
-      }
     },
     removeJuggernaut: function(jugg) {
       game.custom.memory.isJuggernaut = undefined;
@@ -491,19 +347,36 @@ var functions = {
       this.alert(ship, `Playing`, `You're out of the spawn!`, "", `yellow`, 3000, {v1: 8, v2: 4, v3: 4});
     },
     alert: function(ship, value1, value2="", value3="", color="none", time=3000, i={v1: 4, v2: 4, v3: 4}) {
+      
+      // TO FIX, setTimeout
+      
       clearTimeout(ship.custom.logtimeout);
-      ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "alertText", visible: false, position: [0, 0, 0, 0]})}, time);
+      ship.custom.logtimeout = setTimeout(() => {
+        ship.setUIComponent({id: "alertText", visible: false, position: [0, 0, 0, 0]})
+      }, time);
+      
       ship.setUIComponent({
         id: "alertText",
         position: [-5, -5, 110, 110],
         clickable: false,
         visible: true,
         components: [
-          {type: "text", position: [0, 20, 100, i.v1], color: gameCommands.findColor(color), value: value1},
-          {type: "text", position: [0, 25+(i.v1-i.v2), 100, i.v2], color: gameCommands.findColor(color), value: value2},
-          {type: "text", position: [0, 30+(i.v2-i.v3)+(i.v1-i.v2), 100, i.v3], color: gameCommands.findColor(color), value: value3},
+          {type: "text", position: [0, 20, 100, i.v1], color: this.findColor(color), value: value1},
+          {type: "text", position: [0, 25+(i.v1-i.v2+1), 100, i.v2], color: this.findColor(color), value: value2},
+          {type: "text", position: [0, 30+(i.v2-i.v3)+(i.v1-i.v2), 100, i.v3], color: this.findColor(color), value: value3},
         ]
       });
+    },
+    findColor: function(color) { // do colors
+      switch(color) {
+        case "none": return;
+        case "green": return "#70ffc1";
+        case "red": return "#ff7070";
+        case "orange": return "#ffb670";
+        case "lightblue": return "#70dcff";
+        case "yellow": return "#fff870";
+        default: return "#ffffff";
+      }
     },
     radarPos: {
       zoom: 10 / 100,
@@ -511,16 +384,16 @@ var functions = {
         return Math.max(x, 0) || 0;
       },
       X: function(x, size) {
-	return this.positize((x + 100 * 5 - size) * this.zoom);
+        return this.positize((x + 100 * 5 - size) * this.zoom);
       },
       Y: function(y, size) {
-	return this.positize((-y + 100 * 5 - size) * this.zoom);
+        return this.positize((-y + 100 * 5 - size) * this.zoom);
       },
       addRadarSpot: function(type,x,y,width,height,color="rgba(255,255,255,0.6)",value=undefined) {
         switch(type) {
-	  case "box":return{type:type, position:[this.X(x, width/2),this.Y(y, height/2),width/2,height/2], fill:color};
-	  case "round":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], stroke:color, width: 2};
-	  case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
+          case "box":return{type:type, position:[this.X(x, width/2),this.Y(y, height/2),width/2,height/2], fill:color};
+          case "round":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], stroke: color, width: 2};
+          case "text":return{type:type, position:[this.X(x-45, width/2),this.Y(y+45, height/2),width/2.5,height/2.5], value: value, color: color};
         }
       }
     },
@@ -533,6 +406,16 @@ var functions = {
         position: [65,0,10,10],
         components: []
       });
+      for (let key = 0; key < 8; key++) {
+        ship.setUIComponent({
+          id: "stats_upgrades_"+key+"_button_blocker",
+          position: [10*key-10,92,10,8],
+          clickable: true,
+          visible: true,
+          shortcut: key.toString(),
+          components: []
+        });
+      }
     }
   },
   buttons: {
@@ -580,7 +463,7 @@ var functions = {
         ship.set({
           type: type,
           crystals: maxCrystals,
-          stats: 66666666, shield: 9999, vx: 0, vy: 0 ///////////////////////////////// originally 66666666
+          stats: 66666666, shield: 9999, vx: 0, vy: 0 // originally 66666666
         });
         this.setBackground(ship, true, type);
       }
@@ -592,11 +475,15 @@ var functions = {
   healthJugg: function(ship, visible) { // UI component for the health bar in game
     try {
       const jug = game.custom.memory.isJuggernaut; // finds who is juggernaut
-      const name = this.finder(jug.type).name;
-      const cap = this.finder(jug.type).specs.shield.capacity;
+      const name = this.finder(jug.type).name; // name of the juggernaut's ship
+      
       const shield_stat = Number(String(jug.stats).padStart(8, "0")[0]);
+      
+      const cap = this.finder(jug.type).specs.shield.capacity; // shield capacity of the juggernaut
       const real_cap = ((cap[1]-cap[0])/6)*shield_stat + cap[0];
+      
       game.custom.memory.juggShield = Math.round(jug.shield);
+      
       ship.setUIComponent({
         id: "juggHealthBar",
         position: visible ? [24, 4, 53, 6] : [0,0,0,0],
@@ -693,9 +580,15 @@ var functions = {
   endGame: {
     jugg: function(game) { // jugg lost
       let jugg = game.custom.memory.isJuggernaut;
+      
       functions.usage.alert(jugg, `Juggernaut Terminated!`, `Human battalion has destroyed your ship!`, ``, `red`, 8000, {v1: 6, v2: 4, v3: 4});
-      game.ships.filter(ship => ship !== jugg).forEach(ship => {functions.usage.alert(ship, `Mission success!`, `The Juggernaut has been eliminated!`, ``, `yellow`, 8000, {v1: 6, v2: 4, v3: 4})});
+      game.ships.filter(ship => ship !== jugg).forEach(ship => {
+        functions.usage.alert(ship, `Mission success!`, `The Juggernaut has been eliminated!`, ``, `yellow`, 8000, {v1: 6, v2: 4, v3: 4});
+      });
       for (let ship of game.ships) ship.set({collider: false});
+      
+      // TO FIX, setTimeout
+      
       setTimeout(() => {
         for (let ship of game.ships) {
           ship.gameover({
@@ -707,9 +600,16 @@ var functions = {
     },
     players: function(game) { // players lost
       let jugg = game.custom.memory.isJuggernaut;
+      
       functions.usage.alert(jugg, `Control Stations secured!`, `Human battle stations have been suppressed!`, ``, `yellow`, 8000, {v1: 6, v2: 4, v3: 4});
-      game.ships.filter(ship => ship !== jugg).forEach(ship => {functions.usage.alert(ship, `Mission failed!`, `The Juggernaut has captured the Control Stations!`, ``, `red`, 8000, {v1: 6, v2: 4, v3: 4})});
+      game.ships.filter(ship => ship !== jugg).forEach(ship => {
+        functions.usage.alert(ship, `Mission failed!`, `The Juggernaut has captured the Control Stations!`, ``, `red`, 8000, {v1: 6, v2: 4, v3: 4});
+      });
+      
       for (let ship of game.ships) ship.set({collider: false});
+      
+      // TO FIX, setTimeout
+      
       setTimeout(() => {
         for (let ship of game.ships) {
           ship.gameover({
@@ -718,6 +618,7 @@ var functions = {
           });
         }
       }, 10000);
+      
     }
   }
 };
@@ -755,8 +656,9 @@ var points = {
     var path = this.shortestPath(ship.x, ship.y, point.x, point.y)
     var distance = this.distance(path[0], path[1])
     const visuals = (type==="juggernaut") ?
-    {type: "box", position: [38.5, 44, 23, 40], fill: `rgba(${color}, 0.6)`, stroke: "#CDE", width: 2} :
-    {type: "round", position: [36.5, 40, 27.5, 47.5], fill: `rgba(${color}, 0.6)`, stroke: "#CDE", width: 2}
+      {type: "box", position: [38.5, 44, 23, 40], fill: `rgba(${color}, 0.6)`, stroke: "#CDE", width: 2} :
+      {type: "round", position: [36.5, 40, 27.5, 47.5], fill: `rgba(${color}, 0.6)`, stroke: "#CDE", width: 2}
+    
     ship.setUIComponent({
       id: `path${type}${value}`,
       position: [45 + path[0] / distance * 25, 45 - path[1] / distance * 25, 8, 8],
@@ -779,14 +681,13 @@ var points = {
   },
   manage: function(ID) {
     var state;
-    var decay = 2;
     var memory = game.custom.memory;
     var memoUI = memory.pointsInfo[ID];
     var capState = memoUI.captureState;
     if (capState > 99) {
       state = 0;
       var capState = capState.toPrecision(3)
-      memory.pointsInfo[ID].captureState -= decay;
+      memory.pointsInfo[ID].captureState -= gameOptions.decaySpeed;
       memory.radarBackground.components[ID].stroke = "RGBA(207, 49, 49, 0.6)";
       memoUI.UI.components[0].fill = "RGBA(207, 49, 49, 0.6)";
       memoUI.UI.components[0].stroke = "RGB(207, 49, 49)";
@@ -799,7 +700,7 @@ var points = {
     } else if (capState <= 99 && capState > 0) {
       state = 1;
       var capState = capState.toPrecision(3)
-      memory.pointsInfo[ID].captureState -= decay;
+      memory.pointsInfo[ID].captureState -= gameOptions.decaySpeed;
       capState = capState >= 0 ? capState : 0;
       memory.radarBackground.components[ID].stroke = "RGBA(255, 255, 255, 0.6)";
       memoUI.UI.components[0].fill = "RGBA(255, 255, 255, 0.6)";
@@ -809,7 +710,7 @@ var points = {
       memoUI.UI.components[2].fill = "RGB(255, 255, 255)";
       memoUI.UI.components[3].color = "RGB(55, 55, 55)";
       memoUI.UI.components[4].value = `${capState}%`;
-      memoUI.UI.components[5].value = `🛡️`;
+      memoUI.UI.components[5].value = `⚠️`;
     } else {
       state = 2;
       var capState = capState.toPrecision(3)
@@ -821,7 +722,7 @@ var points = {
       memoUI.UI.components[2].fill = "RGB(13, 191, 25)";
       memoUI.UI.components[3].color = "#ffffff";
       memoUI.UI.components[4].value = `Captured`;
-      memoUI.UI.components[5].value = `⚠️`;
+      memoUI.UI.components[5].value = `💥️`;
     }
     this.updateEverything(ID,state);
   },
@@ -960,7 +861,7 @@ function spawnObjects() {
         specularColor: 0xFF8040,
         shininess: 0,
         physics: {
-          mass: 100,
+          mass: 1000,
           shape: [2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.308,3.048,2.878,2.759,2.697,2.697,2.759,2.878,3.048,3.308,3.672,3.678,3.474,3.169,2.958,2.806,2.723,2.682,2.723,2.806,2.958,3.169,3.474,3.678,3.672,3.307,3.054,2.878,2.761,2.698,2.698,2.761,2.878,3.054,3.307,3.672,3.678,3.474,3.169,2.958,2.806,2.723],
           fixed: true
         },
@@ -982,20 +883,23 @@ function spawnObjects() {
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",-40,-476,size+21,size,"rgba(255,20,20,0.6)"));
   for (let i = -49; i<=50; i+=7) {
     addCube(`cubeTop${i}`, i, -395, size, {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5}, false);
-    addCube(`cubeBottom${i}`, i, -475, size, {x:Math.PI/2,y:Math.PI,z:Math.PI*1.5}, false);
+    addCube(`cubeBottom${i}`, i, -475, size, {x:Math.PI/2,y:Math.PI*0,z:Math.PI*1.5}, false);
   }
   // left and right line
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",56,-405,size,size+15,"rgba(255,20,20,0.6)"));
   game.custom.memory.radarBackground.components.push(functions.usage.radarPos.addRadarSpot("box",-54,-405,size,size+15,"rgba(255,20,20,0.6)"));
   for (let i=-400; i>=-475; i-=7) {
-    addCube(`cubeLeft${i}`, 55, i, size, {x:Math.PI,y:Math.PI/2,z:Math.PI}, false);
-    addCube(`cubeRight${i}`, -55, i, size, {x:Math.PI,y:Math.PI/2,z:Math.PI}, false);
+    addCube(`cubeRight${i}`, 55, i, size, {x:Math.PI,y:Math.PI/2,z:Math.PI}, false);
+    addCube(`cubeLeft${i}`, -55, i, size, {x:Math.PI/2,y:Math.PI*1.5,z:Math.PI*1.5}, false);
   }
-}
+};
 
 this.tick = function(game) {
   if (game.step % 60 === 0) {
     functions.updateScoreboard(game);
+    if (game.custom.initialized === false && game.custom.commandsOn === false) {
+      functions.startingTimer(game);
+    }
     if (points.allCaptured() && game.custom.memory.isJuggernaut !== null) {
       functions.endGame.players(game);
     }
@@ -1005,22 +909,22 @@ this.tick = function(game) {
         points.manage(i);
       } 
     }
+    for (let ship of game.ships.filter(ship => ship !== game.custom.memory.isJuggernaut)) {
+      if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) {
+        points.addPath("juggernaut", ship, game.custom.memory.isJuggernaut, "👾", "13, 255, 25");
+        functions.healthJugg(ship, true);
+      } else {ship.setUIComponent({id: "juggernaut",position: [0,0,0,0],visible: false})}
+    }
   }
-  if (game.step % 20 === 0) {
+  if (game.step % 10 === 0) {
     if (game.custom.memory.isJuggernaut === null) {
       const newJugg = functions.usage.random(functions.usage.getPlayers());
       functions.usage.selectJuggernaut(newJugg);
     }
     for (let ship of game.ships) {
       functions.healthPlayers(ship);
-      if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false) {
+      if ((ship.x < 50 && ship.x > -50 && ship.y < -400 && ship.y > -420) && ship.custom.isOutOfSpawn === false && game.custom.initialized === true) {
         functions.usage.outOfSpawn(ship);
-      }
-    }
-    for (let ship of game.ships.filter(ship => ship !== game.custom.memory.isJuggernaut)) {
-      if (game.custom.memory.isJuggernaut !== null || game.custom.memory.isJuggernaut !== undefined) {
-        points.addPath("juggernaut", ship, game.custom.memory.isJuggernaut, "👾", "13, 255, 25");
-        functions.healthJugg(ship, true);
       }
     }
   }
@@ -1094,11 +998,20 @@ function prepareGame() {
         }
       }
     };
-    gameCommands.resolveCommands();
+    try {
+      gameCommands.resolveCommands();
+      gameCommands.log('\n\n  Custom Commands installed', 'blue');
+      game.custom.commandsOn = true;
+      
+      // TO FIX, setTimeout
+      
+      setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
+    } catch(e) {
+      game.custom.commandsOn = false;
+    }
     points.create();
     points.prepareUI();
     spawnObjects();
-    
     
   } catch (e) {
     echo(`\n[[i;#ff7373;]  Starting Failed % ${e}]\n`);
@@ -1110,5 +1023,4 @@ function prepareGame() {
   game.custom.started = true;
   game.custom.initialized = false;
   game.custom.memory.juggShield = 999999;
-  setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
 }
