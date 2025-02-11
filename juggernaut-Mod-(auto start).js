@@ -955,17 +955,32 @@ this.event = function(event, game) {
 };
 
 function prepareGame() {
-  const { echo } = game.modding.terminal;
-  const maxLength = Math.max(...Object.keys(gameOptions.info).map(key => key.length));
-  echo(`\n[[i;#ff7070;]  Staring % Initializing...]\n`);
-  Object.keys(gameOptions.info).forEach((key, index) => {
-    const formattedKey = `${key.charAt(0).toUpperCase() + key.substring(1)}:`.padEnd(maxLength + 2);
-    echo(`[[i;Cyan;]     ${formattedKey}] [[i;Gold;]${gameOptions.info[key]}]`);
-  });
   
-  // do tests
-  echo(`\n[[i;#ffb670;]  Procecutive Order % Starting]`);
+  try {
+    gameCommands.resolveCommands();
+    gameCommands.log('\n\n  Custom Commands installed', '');
+    game.custom.commandsOn = true;
+      
+    // TO FIX, setTimeout
+      
+    setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
+  } catch(e) {
+    game.custom.commandsOn = false;
+  }
   
+  if (game.custom.commandsOn === true) {
+    const { echo } = game.modding.terminal;
+    const maxLength = Math.max(...Object.keys(gameOptions.info).map(key => key.length));
+    echo(`\n[[i;#ff7070;]  Staring % Initializing...]\n`);
+    Object.keys(gameOptions.info).forEach((key, index) => {
+      const formattedKey = `${key.charAt(0).toUpperCase() + key.substring(1)}:`.padEnd(maxLength + 2);
+      echo(`[[i;Cyan;]     ${formattedKey}] [[i;Gold;]${gameOptions.info[key]}]`);
+    });
+    
+      // do tests
+    echo(`\n[[i;#ffb670;]  Procecutive Order % Starting]`);
+  }
+
   try {
     
     game.custom.memory = {
@@ -998,17 +1013,7 @@ function prepareGame() {
         }
       }
     };
-    try {
-      gameCommands.resolveCommands();
-      gameCommands.log('\n\n  Custom Commands installed', 'blue');
-      game.custom.commandsOn = true;
-      
-      // TO FIX, setTimeout
-      
-      setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
-    } catch(e) {
-      game.custom.commandsOn = false;
-    }
+    
     points.create();
     points.prepareUI();
     spawnObjects();
@@ -1019,7 +1024,11 @@ function prepareGame() {
   }
   
   // continue if started properly
-  echo(`\n[[i;#85ff70;]  Started % Log-enabled\n`);
+  
+  if (game.custom.commandsOn === true) {
+    echo(`\n[[i;#85ff70;]  Started % Log-enabled\n`);
+  }
+  
   game.custom.started = true;
   game.custom.initialized = false;
   game.custom.memory.juggShield = 999999;
