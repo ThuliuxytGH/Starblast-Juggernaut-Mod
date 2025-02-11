@@ -87,27 +87,29 @@ const gameOptions = {
   }
 };
 
+
+
 const vocabulary = [
-    { text: "You", icon:"\u004e", key:"O" },
-    { text: "GG", icon:"\u00a3", key:"G" },
-    { text: "Sorry", icon:"\u00a1", key:"S" },
-    { text: "No Problem", icon:"\u0047", key:"P" },
+  { text: "You", icon:"\u004e", key:"O" },
+  { text: "GG", icon:"\u00a3", key:"G" },
+  { text: "Sorry", icon:"\u00a1", key:"S" },
+  { text: "No Problem", icon:"\u0047", key:"P" },
     
-    { text: "What?", icon:"\u004b", key:"Q" },
-    { text: "Wait", icon:"\u0048", key:"T" },
-    { text: "Yes", icon:"\u004c", key:"Y" },
-    { text: "No", icon:"\u004d", key:"N" },
+  { text: "What?", icon:"\u004b", key:"Q" },
+  { text: "Wait", icon:"\u0048", key:"T" },
+  { text: "Yes", icon:"\u004c", key:"Y" },
+  { text: "No", icon:"\u004d", key:"N" },
     
-    { text: "Attack", icon:"\u00b4", key:"A" },
-    { text: "Shield up", icon:"\u0063", key:"H" },
-    { text: "Juggernaut", icon:"\u00bf", key:"J" },
-    { text: "Powerup", icon:"\u00c0", key:"I" },
+  { text: "Attack", icon:"\u00b4", key:"A" },
+  { text: "Shield up", icon:"\u0063", key:"H" },
+  { text: "Juggernaut", icon:"\u00bf", key:"J" },
+  { text: "Powerup", icon:"\u00c0", key:"I" },
     
-    { text: "Thanks", icon:"\u0041", key:"X" },
-    { text: "Regroup", icon:"\u00bd", key:"F" },
-    { text: "Me", icon:"\u004f", key:"E" },
-    { text: "Spread out", icon:"\u00bc", key:"D" }
-  ];
+  { text: "Thanks", icon:"\u0041", key:"X" },
+  { text: "Regroup", icon:"\u00bd", key:"F" },
+  { text: "Me", icon:"\u004f", key:"E" },
+  { text: "Spread out", icon:"\u00bc", key:"D" }
+];
 
 const map = 
 "                                                                                                    \n"+
@@ -211,10 +213,6 @@ const map =
 "                                                                                                    \n"+
 "                                                                                                    ";
 
-// TO FIX, setTimeout
-
-setTimeout(() => {game.custom.started||prepareGame()}, 400);
-
 this.options = {
   root_mode: "",
   map_name: `${gameOptions.info.name} - Beta v${gameOptions.info.version}`,
@@ -233,6 +231,12 @@ this.options = {
 };
 
 var functions = {
+  
+  step: 0,
+  timeouts: new Map(),
+  
+  time: 60,
+  
   startGame: function(juggType=undefined, IDjugg=undefined, IDflag=undefined) {
     game.custom.memory.juggShield = 999999;
     if (typeof(juggType) == "number") {
@@ -254,14 +258,35 @@ var functions = {
     functions.usage.selectFlagShip(newFlag);
     newJugg.set({stats:77777777,shield:999999}); // game.findShip(i).set({String(game.ships.length).repeat(8)})
     let base = game.ships.length - 2;
-    newJugg.set({stats: Number(String(base < 7 ? base : 7).repeat(8))});//newJugg.set({stats:String(game.ships.length-1).repeat(8),shield:999999});
+    newJugg.set({stats: Number(String(base < 7 ? base : 7).repeat(8))}); // newJugg.set({stats:String(game.ships.length-1).repeat(8),shield:999999});
   },
-  time: 60,
   startingTimer: function(game) {
     functions.usage.alert(game, `Waiting for more players`, `${this.time--}`, `${3-game.ships.length} players needed`, `yellow`, 2000, {v1: 6, v2: 6, v3: 4});
     if (this.time <= 0 || game.ships.length >= 6) {
       game.custom.initialized = true;
       this.startGame(game);
+    }
+  },
+  stepTimeout: {
+    cleared: function(id) {
+      functions.timeouts.delete(id);
+    },
+    seted: function(callback, delayMs) {
+      const id = Symbol();
+      const startStep = functions.step;
+      const targetStep = startStep + Math.round((delayMs / 1000) * 60);
+      function check() {
+        if (!functions.timeouts.has(id)) return;
+        if (functions.step >= targetStep) {
+          functions.timeouts.delete(id);
+          callback();
+        } else {
+          requestAnimationFrame(check);
+        }
+      }
+      functions.timeouts.set(id, check);
+      check();
+      return id;
     }
   },
   usage: {
@@ -347,11 +372,8 @@ var functions = {
       this.alert(ship, `Playing`, `You're out of the spawn!`, "", `yellow`, 3000, {v1: 8, v2: 4, v3: 4});
     },
     alert: function(ship, value1, value2="", value3="", color="none", time=3000, i={v1: 4, v2: 4, v3: 4}) {
-      
-      // TO FIX, setTimeout
-      
-      clearTimeout(ship.custom.logtimeout);
-      ship.custom.logtimeout = setTimeout(() => {
+      functions.stepTimeout.cleared(ship.custom.logtimeout);
+      ship.custom.logtimeout = functions.stepTimeout.seted(() => {
         ship.setUIComponent({id: "alertText", visible: false, position: [0, 0, 0, 0]})
       }, time);
       
@@ -585,11 +607,10 @@ var functions = {
       game.ships.filter(ship => ship !== jugg).forEach(ship => {
         functions.usage.alert(ship, `Mission success!`, `The Juggernaut has been eliminated!`, ``, `yellow`, 8000, {v1: 6, v2: 4, v3: 4});
       });
+      
       for (let ship of game.ships) ship.set({collider: false});
-      
-      // TO FIX, setTimeout
-      
-      setTimeout(() => {
+
+      functions.stepTimeout.seted(() => {
         for (let ship of game.ships) {
           ship.gameover({
             "Score":ship.score,
@@ -607,10 +628,8 @@ var functions = {
       });
       
       for (let ship of game.ships) ship.set({collider: false});
-      
-      // TO FIX, setTimeout
-      
-      setTimeout(() => {
+
+      functions.stepTimeout.seted(() => {
         for (let ship of game.ships) {
           ship.gameover({
             "Score":ship.score,
@@ -895,6 +914,7 @@ function spawnObjects() {
 };
 
 this.tick = function(game) {
+  functions.step = game.step;
   if (game.step % 60 === 0) {
     functions.updateScoreboard(game);
     if (game.custom.initialized === false && game.custom.commandsOn === false) {
@@ -960,10 +980,9 @@ function prepareGame() {
     gameCommands.resolveCommands();
     gameCommands.log('\n\n  Custom Commands installed', '');
     game.custom.commandsOn = true;
-      
-    // TO FIX, setTimeout
-      
-    setTimeout(() => echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`), 2000);
+    functions.stepTimeout.seted(() => {
+      echo(`\n[[ig;#85ff70;]Write] [[g;Gold;]<info commands>] [[ig;#85ff70;]in the console]\n[[ig;Cyan;]For more information on the mod and its integrated commands.]\n`)
+    }, 2000);
   } catch(e) {
     game.custom.commandsOn = false;
   }
@@ -980,9 +999,8 @@ function prepareGame() {
       // do tests
     echo(`\n[[i;#ffb670;]  Procecutive Order % Starting]`);
   }
-
+  
   try {
-    
     game.custom.memory = {
       radarBackground: {
         id:"radar_background",
@@ -1013,18 +1031,15 @@ function prepareGame() {
         }
       }
     };
-    
     points.create();
     points.prepareUI();
     spawnObjects();
-    
   } catch (e) {
     echo(`\n[[i;#ff7373;]  Starting Failed % ${e}]\n`);
     return; // stop if game failed to load
   }
   
   // continue if started properly
-  
   if (game.custom.commandsOn === true) {
     echo(`\n[[i;#85ff70;]  Started % Log-enabled\n`);
   }
@@ -1033,3 +1048,4 @@ function prepareGame() {
   game.custom.initialized = false;
   game.custom.memory.juggShield = 999999;
 }
+game.custom.started||prepareGame();
