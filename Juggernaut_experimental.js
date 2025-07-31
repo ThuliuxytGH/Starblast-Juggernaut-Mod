@@ -301,38 +301,20 @@ const tree = {
     Ark_X_612,
     Wakizashi_613
   ],
-  
   juggernauts: [
     Crystallid_709,
     Lancer_708,
     Biomorph_707,
     Predator_706
   ],
-  
   flagShips: [
     Archon_630,
     Vigilant_631,
     Tyrant_632
   ],
-  
   defaultShip: [
     Fly_101
   ]
-};
-
-const data_tree = {
-  ships: Object.fromEntries(tree.ships.map(str => {
-    let data = JSON.parse(str);
-    return [data.typespec.code.toString(), data];
-  })),
-  juggernauts: Object.fromEntries(tree.juggernauts.map(str => {
-    let data = JSON.parse(str);
-    return [data.typespec.code.toString(), data];
-  })),
-  flagShips: Object.fromEntries(tree.flagShips.map(str => {
-    let data = JSON.parse(str);
-    return [data.typespec.code.toString(), data];
-  }))
 };
 
 const rndmVal = (array) => array[Math.floor(Math.random() * array.length)];
@@ -345,10 +327,23 @@ const intArr = (arr, precision = 1) => {
     (_, i) => min + i / precision
   );
 };
+const buildDataTree = (categoryList) => {
+  return Object.fromEntries(
+    categoryList.map(ship => {
+      const data = JSON.parse(ship);
+      return [data.typespec.code.toString(), data];
+    })
+  );
+};
 
-const scheme =  rndmVal(maps);
+const data_tree = {
+  ships: buildDataTree(tree.ships),
+  juggernauts: buildDataTree(tree.juggernauts),
+  flagShips: buildDataTree(tree.flagShips)
+};
+
 const memory = {
-  scheme: scheme,
+  scheme: rndmVal(maps),
   capture: Object.entries(scheme.bases).map(([key, val]) => [key, 100]),
   
   timer: 0,
@@ -450,110 +445,156 @@ const stepTimeout = {
 const game_UI = {
   health_bar: function(game) {
     for (let ship of game.ships) {
-      if (!Object.keys(data_tree.ships).includes(ship.type)) continue;
+      const shipData = data_tree.ships[ship.type];
+      if (!shipData) continue;
       
-      const cap = data_tree.ships[ship.type].specs.shield.capacity;
-      const shield_stat = Number(String(ship.stats).padStart(8, "0")[0]);
-      const real_cap = ((cap[1]-cap[0])/6) * shield_stat + cap[0];
+      const [minCap, maxCap] = shipData.specs.shield.capacity;
+      const shieldStat = Number(String(ship.stats).padStart(8, "0")[0]);
+      const realCap = minCap + ((maxCap - minCap) / 6) * shieldStat;
       
-      const visible = cap[1] < 999;
+      const isVisible = maxCap < 999;
+      const shieldRatio = Math.max(0, Math.min(1, ship.shield / realCap));
+      const shieldWidth = Math.round(shieldRatio * 75);
+      
       ship.setUIComponent({
         id: "playersHealthBar",
-        position: visible ? [3, 9.8, 18, 4.1] : [0, 0, 0, 0],
+        position: isVisible ? [3, 9.8, 18, 4.1] : [0, 0, 0, 0],
         clickable: false,
-        visible: visible,
-        components: [
-          {type: "box", position: [1, 14, 75, 78], fill: "#545454", stroke: "#00eef2"},
-          {type: "box", position: [1, 14, (Math.round(ship.shield)/real_cap) * 75, 78], fill: "#00eef2"},
-          
-          {type: "box", position: [79, 14, 20, 78], fill: "#00eef2", stroke: "#00eef2"},
-          {type: "text", position: [79.5, 5, 19.5, 100], align: "left", value: `${Math.trunc((ship.shield)/10)/100}K`, color: "#ffffff"}
-        ]
-      });
-    } 
-  },
-  juggHealth_bar: function(game) {
-    const jug = memory.juggernaut.player;
-    if (jug === undefined) return;
-    
-    const name = data_tree.juggernauts[jug.type].name;
-    const shield_stat = Number(String(jug.stats).padStart(8, "0")[0]);
-      
-    const cap = data_tree.juggernauts[jug.type].specs.shield.capacity;
-    const real_cap = cap[1];
-      
-    memory.juggernaut.sheild = Math.round(jug.shield);
-    for (let ship of game.ships) {
-      const visible = ship != jug;
-      ship.setUIComponent({
-        id: "juggHealthBar",
-        position: visible ? [24, 4, 53, 6] : [0,0,0,0],
-        clickable: false,
-        visible: visible,
-        components: [
-          {type: "box", position: [0, 10, 100, 78], stroke: memory.juggernaut.color, width: 2},
-          {type: "box", position: [0, 10, ((memory.juggernaut.sheild/real_cap) * 100), 78], fill: memory.juggernaut.color},
-          {type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [${name}]`, color: "#ffffff"},
-          {type: "text", position: [1, 21.77, 100, 54.55], align: "left", value: `🛡️${Math.trunc((memory.juggernaut.sheild)/10)/100}K`, color: "#fffff"},
-        ]
+        visible: isVisible,
+        components: isVisible ? [
+          { type: "box", position: [1, 14, 75, 78], fill: "#545454", stroke: "#00eef2" },
+          { type: "box", position: [1, 14, shieldWidth, 78], fill: "#00eef2" },
+          { type: "box", position: [79, 14, 20, 78], fill: "#00eef2", stroke: "#00eef2" },
+          { type: "text", position: [79.5, 5, 19.5, 100], align: "left", value: `${(ship.shield / 1000).toFixed(2)}K`, color: "#ffffff" }
+        ] : []
       });
     }
   },
+  juggHealth_bar: function(game) {
+    const jug = memory.juggernaut.player;
+    if (!jug) return;
+    
+    const jugData = data_tree.juggernauts[jug.type];
+    const shieldCap = jugData.specs.shield.capacity[1]; // max capacity
+    const name = jugData.name;
+    
+    const currentShield = Math.round(jug.shield);
+    memory.juggernaut.shield = currentShield; // correction: "shield"
+    
+    const shieldRatio = Math.max(0, Math.min(1, currentShield / shieldCap));
+    const barWidth = Math.round(shieldRatio * 100);
+    const color = memory.juggernaut.color || "#00eef2";
+    
+    for (let ship of game.ships) {
+      const isVisible = ship !== jug;
+      
+      ship.setUIComponent({
+        id: "juggHealthBar",
+        position: isVisible ? [24, 4, 53, 6] : [0, 0, 0, 0],
+        clickable: false,
+        visible: isVisible,
+        components: isVisible ? [
+          { type: "box", position: [0, 10, 100, 78], stroke: color, width: 2 },
+          { type: "box", position: [0, 10, barWidth, 78], fill: color },
+          { type: "text", position: [0, 21.77, 100, 54.55], align: "center", value: `Juggernaut [${name}]`, color: "#ffffff" },
+          { type: "text", position: [1, 21.77, 100, 54.55], align: "left", value: `🛡️${(currentShield / 1000).toFixed(2)}K`, color: "#ffffff" }
+        ] : []
+      });
+    }
+  },
+  
   capturePoints: function(game) {
     
   },
   timer: function(game) {
     
   },
+  
   scorebord: function(game) {
+    const juggernautShips = memory.juggernaut.player ? [memory.juggernaut.player] : [];
+    const flagShipArr = memory.flagShip.player ? [memory.flagShip.player] : [];
+    
+    const otherPlayers = game.ships
+      .filter(ship => ship !== memory.juggernaut.player && ship !== memory.flagShip.player)
+      .sort((a, b) => b.score - a.score);
+      
+    const playerShips = [...flagShipArr, ...otherPlayers];
     const sortedShips = {
-      juggernaut: memory.juggernaut.player !== undefined ? [memory.juggernaut.player] : [],
-      players: [
-        memory.flagShip.player !== undefined ? [memory.flagShip.player] : [], 
-        game.ships.filter(ship => ship !== memory.juggernaut.player).filter(ship => ship !== memory.flagShip.player).sort((a,b) => b.score - a.score)
-      ].flat(Infinity)
+      juggernaut: juggernautShips,
+      players: playerShips
     };
+    
+    function createShipComponents(ships, yOffset = 0) {
+      return ships.flatMap((ship, i) => ([
+        { type: "text", position: [0, 0, 77, 7.5], value: "" },
+        { 
+          type: "player", 
+          index: i, 
+          position: [0, 10 * i + yOffset, 77, 8.5], 
+          id: ship.id, 
+          color: "rgb(255, 255, 255)", 
+          value: "", 
+          align: "left" 
+        },
+        { 
+          type: "text", 
+          position: [68, 10 * i + yOffset + 0.75, 30, 7.5], 
+          value: ship.score, 
+          color: "rgb(255, 255, 255)", 
+          align: "right" 
+        }
+      ]));
+    };
+    
     const Scoreboard = {
       id: "scoreboard",
       clickable: false,
       visible: true,
       components: [
+        // Juggernaut
         { type: "box", position: [0, 0, 100, 9.75], fill: memory.juggernaut.color },
-        { type: "text", position: [3, 0.75, 69, 8], value: "Juggernaut", color: `rgb(255, 255, 255)`, align: "left" },
+        { type: "text", position: [3, 0.75, 69, 8], value: "Juggernaut", color: "#fff", align: "left" },
         
-        ...sortedShips.juggernaut.map((ship, i) => [
-          { type: "text", position: [0, 0, 77, 7.5], value: "" },
-          { type: "player", index: i, position: [0, 10 * i + 11, 77, 8.5], id: ship.id, color: `rgb(255, 255, 255)`, value: "", align: "left" },
-          { type: "text", position: [68, 10 * i + 11.75, 30, 7.5], value: ship.score, color: `rgb(255, 255, 255)`, align: "right" }
-        ]).flat(Infinity),
+        // List Juggernaut(s)
+        ...createShipComponents(sortedShips.juggernaut, 11),
         
+        // Players
         { type: "box", position: [0, 10 * sortedShips.juggernaut.length + 10.5, 100, 9.75], fill: memory.players.color },
-        { type: "text", position: [3, 10 * sortedShips.juggernaut.length + 11.25, 69, 8], value: "Players", color: `rgb(255, 255, 255)`, align: "left" },
-        { type: "text", position: [3, 10 * sortedShips.juggernaut.length + 11.25, 95, 8], value: `👥${sortedShips.players.length}`, color: `rgb(255, 255, 255)`, align: "right" },
+        { type: "text", position: [3, 10 * sortedShips.juggernaut.length + 11.25, 69, 8], value: "Players", color: "#fff", align: "left" },
+        { type: "text", position: [3, 10 * sortedShips.juggernaut.length + 11.25, 95, 8], value: `👥${sortedShips.players.length}`, color: "#fff", align: "right" },
         
-        ...sortedShips.players.map((ship, i) => [
-          { type: "text", position: [0, 0, 77, 7.5], value: "" },
-          { type: "player", index: i, position: [0, 10 * (i+sortedShips.juggernaut.length) + 21.5, 77, 8.5], id: ship.id, color: `rgb(255, 255, 255)`, value: "", align: "left" },
-          { type: "text", position: [68, 10 * (i+sortedShips.juggernaut.length) + 22, 30, 7.5], value: ship.score, color: `rgb(255, 255, 255)`, align: "right" }
-        ]).flat(Infinity)
+        // List Players
+        ...createShipComponents(sortedShips.players, 21.5 + 10 * sortedShips.juggernaut.length)
       ]
     };
+    
     for (let ship of game.ships) {
-      if (ship === null) continue;
+      if (!ship) continue;
       let components = [...Scoreboard.components];
-      let index = components.findIndex(c => c.type == "player" && c.id === ship.id);
-      if (index == -1) {
-        let last = Scoreboard.components.at(-1);
+      let playerIndex = components.findIndex(c => c.type === "player" && c.id === ship.id);
+      
+      if (playerIndex === -1) {
+        const last = components.at(-1);
         last.id = ship.id;
-        last.color = `rgb(${settings.teams[ship.team]})`; 
-        Scoreboard.components.at(-1).value = ship.score;
-        index = Scoreboard.components.length - 1;
+        last.color = `rgb(${settings.teams[ship.team]})`;
+        last.value = ship.score;
+        playerIndex = components.length - 1;
       }
-      const pos = (ship.team === 0) ? 
-        [0, 10 * components[index].index + 10.1, 100, 10] : 
-        [0, 10 * (components[index].index + sortedShips.juggernaut.length) + 20.75, 100, 10];
-      Scoreboard.components.splice(index, 0, {type: "box",position: pos, fill: "rgba(200, 200, 255, 0.2)"});
-      ship.setUIComponent(Scoreboard);
+      
+      const baseYOffset = ship.team === 0 ? 
+        10 * components[playerIndex].index + 10.1 : 
+        10 * (components[playerIndex].index + sortedShips.juggernaut.length) + 20.75;
+      
+      components.splice(playerIndex, 0, {
+        type: "box",
+        position: [0, baseYOffset, 100, 10],
+        fill: "rgba(200, 200, 255, 0.2)"
+      });
+      
+      ship.setUIComponent({
+        ...Scoreboard,
+        components
+      });
       Scoreboard.components = components;
     }
   },
@@ -586,7 +627,7 @@ this.tick = function(game) {
   stepTimeout.update(game);
   
   if (game.step % 60 === 0) {
-    memory.juggernaut.player = game.ships[1];
+    memory.juggernaut.player = game.ships[0];
     
     game_UI.health_bar(game);
     game_UI.juggHealth_bar(game);
